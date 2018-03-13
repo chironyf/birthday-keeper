@@ -11,6 +11,7 @@
 		9E63E4D52056A8D900F9095F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D42056A8D900F9095F /* RootViewController.m */; };
 		9E63E4D92056AA3E00F9095F /* BirthdayInfoAddedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */; };
 		9EC16B552057B26C00C41B6E /* PromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC16B542057B26C00C41B6E /* PromptViewController.m */; };
+		9EC16B582057D04500C41B6E /* PromptEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC16B572057D04500C41B6E /* PromptEditCell.m */; };
 		9EFF6D542055041900D31326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D532055041900D31326 /* AppDelegate.m */; };
 		9EFF6D5C2055041900D31326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EFF6D5B2055041900D31326 /* Assets.xcassets */; };
 		9EFF6D5F2055041900D31326 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EFF6D5D2055041900D31326 /* LaunchScreen.storyboard */; };
@@ -48,6 +49,8 @@
 		9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayInfoAddedViewController.m; sourceTree = "<group>"; };
 		9EC16B532057B26C00C41B6E /* PromptViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptViewController.h; sourceTree = "<group>"; };
 		9EC16B542057B26C00C41B6E /* PromptViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PromptViewController.m; sourceTree = "<group>"; };
+		9EC16B562057D04500C41B6E /* PromptEditCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptEditCell.h; sourceTree = "<group>"; };
+		9EC16B572057D04500C41B6E /* PromptEditCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PromptEditCell.m; sourceTree = "<group>"; };
 		9EFF6D4F2055041900D31326 /* birthday-keeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "birthday-keeper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EFF6D522055041900D31326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9EFF6D532055041900D31326 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -100,6 +103,8 @@
 				9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */,
 				9EC16B532057B26C00C41B6E /* PromptViewController.h */,
 				9EC16B542057B26C00C41B6E /* PromptViewController.m */,
+				9EC16B562057D04500C41B6E /* PromptEditCell.h */,
+				9EC16B572057D04500C41B6E /* PromptEditCell.m */,
 			);
 			path = "add-birthday";
 			sourceTree = "<group>";
@@ -337,6 +342,7 @@
 				9E63E4D52056A8D900F9095F /* RootViewController.m in Sources */,
 				9EFF6D622055041900D31326 /* main.m in Sources */,
 				9EFF6D8B205504C800D31326 /* BirthdayCellModel.m in Sources */,
+				9EC16B582057D04500C41B6E /* PromptEditCell.m in Sources */,
 				9EFF6D542055041900D31326 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -135,11 +135,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     BirthdayCell *item = [BirthdayCell initWithTableView:tableView andReuseIdentifier:BirthdayCellIdentifier];
-    if (item == nil) {
-        NSLog(@"item cell == nil");
-    } else {
-        NSLog(@"item cell != nil");
-    }
+
     [item.prompt setText:_birthdayInfo[indexPath.row].prompt];
     [item.createdTime setText:_birthdayInfo[indexPath.row].createdTime];
     [item.remindTime setText:_birthdayInfo[indexPath.row].remindTime];

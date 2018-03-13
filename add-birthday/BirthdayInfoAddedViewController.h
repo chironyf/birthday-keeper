@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class BirthdayCellModel;
-@interface BirthdayInfoAddedViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface BirthdayInfoAddedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) BirthdayCellModel *birthdayInfo;
 
