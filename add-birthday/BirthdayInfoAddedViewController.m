@@ -28,8 +28,6 @@
     
     self.navigationItem.title = @"添加生日";
     
-
-    
     self.view.backgroundColor = UIColor.whiteColor;
     _datePicker = [[UIDatePicker alloc] init];
     [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
@@ -81,7 +79,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         PromptViewController *b = [[PromptViewController alloc] init];
-        
         [self.navigationController pushViewController:b animated:YES];
     } else {
         NSLog(@"section2 called");
@@ -99,8 +96,7 @@
         cell.textLabel.text = _list[indexPath.section][indexPath.row];
         if (indexPath.section == 0) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            
+        
         } else {
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = UIColor.redColor;

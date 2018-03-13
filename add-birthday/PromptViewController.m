@@ -9,6 +9,10 @@
 #import "PromptViewController.h"
 #import "PromptEditCell.h"
 
+
+
+static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
+
 @interface PromptViewController ()
 
 @end
@@ -17,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"标签";
     self.view.backgroundColor = UIColor.whiteColor;
     
     _promptTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
@@ -24,15 +29,15 @@
     [_promptTable setDelegate:self];
     [_promptTable setDataSource:self];
     
-    _promptTable.estimatedRowHeight = 44;
-    _promptTable.rowHeight = UITableViewAutomaticDimension;
+//    _promptTable.estimatedRowHeight = 44;
+    _promptTable.rowHeight = 44;
     _promptTable.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.view addSubview:_promptTable];
     
-    NSLayoutConstraint *promptTableTop = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *promptTableTop = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0];
     
-    NSLayoutConstraint *promptTableBottom = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+    NSLayoutConstraint *promptTableBottom = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     
     NSLayoutConstraint *promptTableLeft = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
     
@@ -41,6 +46,11 @@
     [self.view addConstraints:@[promptTableTop, promptTableBottom, promptTableLeft, promptTableRight]];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    NSLog(@"view will appear");
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -52,9 +62,27 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *const identifier = @"PromptEditCellIdentifier";
-    PromptEditCell *cell = [[PromptEditCell alloc] initWith:tableView andReuseIdentifier:identifier];
+    
+    PromptEditCell *cell = [PromptEditCell initWith:tableView andReuseIdentifier:promtpIdentifier];
+    
+    //设置textField代理以及改换行为完成键
+    [cell.promptEditField setDelegate:self];
+    cell.promptEditField.returnKeyType = UIReturnKeyDone;
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
+}
+
+//点击完成会触发该函数
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    [self.navigationController popViewControllerAnimated:TRUE];
+    return TRUE;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"请输入新的标签";
 }
 
 - (void)didReceiveMemoryWarning {

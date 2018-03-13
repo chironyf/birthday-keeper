@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PromptViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PromptViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextInputTraits>
 
 //接收传过来的prompt
 @property (nonatomic, strong) NSString *prompt;
