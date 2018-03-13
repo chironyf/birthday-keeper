@@ -1,0 +1,621 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9E63E4D22056A85C00F9095F /* BirthdayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D12056A85C00F9095F /* BirthdayTableViewController.m */; };
+		9E63E4D52056A8D900F9095F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D42056A8D900F9095F /* RootViewController.m */; };
+		9E63E4D92056AA3E00F9095F /* BirthdayInfoAddedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */; };
+		9EC16B552057B26C00C41B6E /* PromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC16B542057B26C00C41B6E /* PromptViewController.m */; };
+		9EFF6D542055041900D31326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D532055041900D31326 /* AppDelegate.m */; };
+		9EFF6D5C2055041900D31326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EFF6D5B2055041900D31326 /* Assets.xcassets */; };
+		9EFF6D5F2055041900D31326 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EFF6D5D2055041900D31326 /* LaunchScreen.storyboard */; };
+		9EFF6D622055041900D31326 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D612055041900D31326 /* main.m */; };
+		9EFF6D6C2055041900D31326 /* birthday_keeperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D6B2055041900D31326 /* birthday_keeperTests.m */; };
+		9EFF6D772055041900D31326 /* birthday_keeperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D762055041900D31326 /* birthday_keeperUITests.m */; };
+		9EFF6D8B205504C800D31326 /* BirthdayCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D8A205504C800D31326 /* BirthdayCellModel.m */; };
+		9EFF6D8E205504E300D31326 /* BirthdayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D8D205504E300D31326 /* BirthdayCell.m */; };
+		9EFF6D93205506D000D31326 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EFF6D92205506D000D31326 /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9EFF6D682055041900D31326 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9EFF6D472055041900D31326 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9EFF6D4E2055041900D31326;
+			remoteInfo = "birthday-keeper";
+		};
+		9EFF6D732055041900D31326 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9EFF6D472055041900D31326 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9EFF6D4E2055041900D31326;
+			remoteInfo = "birthday-keeper";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9E63E4D02056A85C00F9095F /* BirthdayTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayTableViewController.h; sourceTree = "<group>"; };
+		9E63E4D12056A85C00F9095F /* BirthdayTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayTableViewController.m; sourceTree = "<group>"; };
+		9E63E4D32056A8D900F9095F /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		9E63E4D42056A8D900F9095F /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		9E63E4D72056AA3E00F9095F /* BirthdayInfoAddedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayInfoAddedViewController.h; sourceTree = "<group>"; };
+		9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayInfoAddedViewController.m; sourceTree = "<group>"; };
+		9EC16B532057B26C00C41B6E /* PromptViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptViewController.h; sourceTree = "<group>"; };
+		9EC16B542057B26C00C41B6E /* PromptViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PromptViewController.m; sourceTree = "<group>"; };
+		9EFF6D4F2055041900D31326 /* birthday-keeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "birthday-keeper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EFF6D522055041900D31326 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9EFF6D532055041900D31326 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9EFF6D5B2055041900D31326 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9EFF6D5E2055041900D31326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9EFF6D602055041900D31326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EFF6D612055041900D31326 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9EFF6D672055041900D31326 /* birthday-keeperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "birthday-keeperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EFF6D6B2055041900D31326 /* birthday_keeperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = birthday_keeperTests.m; sourceTree = "<group>"; };
+		9EFF6D6D2055041900D31326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EFF6D722055041900D31326 /* birthday-keeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "birthday-keeperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EFF6D762055041900D31326 /* birthday_keeperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = birthday_keeperUITests.m; sourceTree = "<group>"; };
+		9EFF6D782055041900D31326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EFF6D89205504C800D31326 /* BirthdayCellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayCellModel.h; sourceTree = "<group>"; };
+		9EFF6D8A205504C800D31326 /* BirthdayCellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayCellModel.m; sourceTree = "<group>"; };
+		9EFF6D8C205504E300D31326 /* BirthdayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayCell.h; sourceTree = "<group>"; };
+		9EFF6D8D205504E300D31326 /* BirthdayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayCell.m; sourceTree = "<group>"; };
+		9EFF6D92205506D000D31326 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9EFF6D4C2055041900D31326 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFF6D642055041900D31326 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFF6D6F2055041900D31326 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9E63E4D62056A9FF00F9095F /* add-birthday */ = {
+			isa = PBXGroup;
+			children = (
+				9E63E4D72056AA3E00F9095F /* BirthdayInfoAddedViewController.h */,
+				9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */,
+				9EC16B532057B26C00C41B6E /* PromptViewController.h */,
+				9EC16B542057B26C00C41B6E /* PromptViewController.m */,
+			);
+			path = "add-birthday";
+			sourceTree = "<group>";
+		};
+		9EFF6D462055041900D31326 = {
+			isa = PBXGroup;
+			children = (
+				9E63E4D62056A9FF00F9095F /* add-birthday */,
+				9EFF6D92205506D000D31326 /* Default-568h@2x.png */,
+				9EFF6D91205505FF00D31326 /* default */,
+				9EFF6D90205505EE00D31326 /* resource */,
+				9EFF6D8F205505DA00D31326 /* config */,
+				9EFF6D88205504B100D31326 /* birthday-cell */,
+				9EFF6D512055041900D31326 /* birthday-keeper */,
+				9EFF6D6A2055041900D31326 /* birthday-keeperTests */,
+				9EFF6D752055041900D31326 /* birthday-keeperUITests */,
+				9EFF6D502055041900D31326 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9EFF6D502055041900D31326 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D4F2055041900D31326 /* birthday-keeper.app */,
+				9EFF6D672055041900D31326 /* birthday-keeperTests.xctest */,
+				9EFF6D722055041900D31326 /* birthday-keeperUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9EFF6D512055041900D31326 /* birthday-keeper */ = {
+			isa = PBXGroup;
+			children = (
+				9E63E4D02056A85C00F9095F /* BirthdayTableViewController.h */,
+				9E63E4D12056A85C00F9095F /* BirthdayTableViewController.m */,
+				9E63E4D32056A8D900F9095F /* RootViewController.h */,
+				9E63E4D42056A8D900F9095F /* RootViewController.m */,
+			);
+			path = "birthday-keeper";
+			sourceTree = "<group>";
+		};
+		9EFF6D6A2055041900D31326 /* birthday-keeperTests */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D6B2055041900D31326 /* birthday_keeperTests.m */,
+				9EFF6D6D2055041900D31326 /* Info.plist */,
+			);
+			path = "birthday-keeperTests";
+			sourceTree = "<group>";
+		};
+		9EFF6D752055041900D31326 /* birthday-keeperUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D762055041900D31326 /* birthday_keeperUITests.m */,
+				9EFF6D782055041900D31326 /* Info.plist */,
+			);
+			path = "birthday-keeperUITests";
+			sourceTree = "<group>";
+		};
+		9EFF6D88205504B100D31326 /* birthday-cell */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D89205504C800D31326 /* BirthdayCellModel.h */,
+				9EFF6D8A205504C800D31326 /* BirthdayCellModel.m */,
+				9EFF6D8C205504E300D31326 /* BirthdayCell.h */,
+				9EFF6D8D205504E300D31326 /* BirthdayCell.m */,
+			);
+			path = "birthday-cell";
+			sourceTree = "<group>";
+		};
+		9EFF6D8F205505DA00D31326 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D602055041900D31326 /* Info.plist */,
+			);
+			path = config;
+			sourceTree = "<group>";
+		};
+		9EFF6D90205505EE00D31326 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D5B2055041900D31326 /* Assets.xcassets */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		9EFF6D91205505FF00D31326 /* default */ = {
+			isa = PBXGroup;
+			children = (
+				9EFF6D522055041900D31326 /* AppDelegate.h */,
+				9EFF6D532055041900D31326 /* AppDelegate.m */,
+				9EFF6D5D2055041900D31326 /* LaunchScreen.storyboard */,
+				9EFF6D612055041900D31326 /* main.m */,
+			);
+			path = default;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9EFF6D4E2055041900D31326 /* birthday-keeper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EFF6D7B2055041900D31326 /* Build configuration list for PBXNativeTarget "birthday-keeper" */;
+			buildPhases = (
+				9EFF6D4B2055041900D31326 /* Sources */,
+				9EFF6D4C2055041900D31326 /* Frameworks */,
+				9EFF6D4D2055041900D31326 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "birthday-keeper";
+			productName = "birthday-keeper";
+			productReference = 9EFF6D4F2055041900D31326 /* birthday-keeper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9EFF6D662055041900D31326 /* birthday-keeperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EFF6D7E2055041900D31326 /* Build configuration list for PBXNativeTarget "birthday-keeperTests" */;
+			buildPhases = (
+				9EFF6D632055041900D31326 /* Sources */,
+				9EFF6D642055041900D31326 /* Frameworks */,
+				9EFF6D652055041900D31326 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9EFF6D692055041900D31326 /* PBXTargetDependency */,
+			);
+			name = "birthday-keeperTests";
+			productName = "birthday-keeperTests";
+			productReference = 9EFF6D672055041900D31326 /* birthday-keeperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9EFF6D712055041900D31326 /* birthday-keeperUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EFF6D812055041900D31326 /* Build configuration list for PBXNativeTarget "birthday-keeperUITests" */;
+			buildPhases = (
+				9EFF6D6E2055041900D31326 /* Sources */,
+				9EFF6D6F2055041900D31326 /* Frameworks */,
+				9EFF6D702055041900D31326 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9EFF6D742055041900D31326 /* PBXTargetDependency */,
+			);
+			name = "birthday-keeperUITests";
+			productName = "birthday-keeperUITests";
+			productReference = 9EFF6D722055041900D31326 /* birthday-keeperUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9EFF6D472055041900D31326 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = chironyf;
+				TargetAttributes = {
+					9EFF6D4E2055041900D31326 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					9EFF6D662055041900D31326 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 9EFF6D4E2055041900D31326;
+					};
+					9EFF6D712055041900D31326 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 9EFF6D4E2055041900D31326;
+					};
+				};
+			};
+			buildConfigurationList = 9EFF6D4A2055041900D31326 /* Build configuration list for PBXProject "birthday-keeper" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9EFF6D462055041900D31326;
+			productRefGroup = 9EFF6D502055041900D31326 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9EFF6D4E2055041900D31326 /* birthday-keeper */,
+				9EFF6D662055041900D31326 /* birthday-keeperTests */,
+				9EFF6D712055041900D31326 /* birthday-keeperUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9EFF6D4D2055041900D31326 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EFF6D5F2055041900D31326 /* LaunchScreen.storyboard in Resources */,
+				9EFF6D5C2055041900D31326 /* Assets.xcassets in Resources */,
+				9EFF6D93205506D000D31326 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFF6D652055041900D31326 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFF6D702055041900D31326 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9EFF6D4B2055041900D31326 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EFF6D8E205504E300D31326 /* BirthdayCell.m in Sources */,
+				9E63E4D92056AA3E00F9095F /* BirthdayInfoAddedViewController.m in Sources */,
+				9EC16B552057B26C00C41B6E /* PromptViewController.m in Sources */,
+				9E63E4D22056A85C00F9095F /* BirthdayTableViewController.m in Sources */,
+				9E63E4D52056A8D900F9095F /* RootViewController.m in Sources */,
+				9EFF6D622055041900D31326 /* main.m in Sources */,
+				9EFF6D8B205504C800D31326 /* BirthdayCellModel.m in Sources */,
+				9EFF6D542055041900D31326 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFF6D632055041900D31326 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EFF6D6C2055041900D31326 /* birthday_keeperTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFF6D6E2055041900D31326 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EFF6D772055041900D31326 /* birthday_keeperUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9EFF6D692055041900D31326 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9EFF6D4E2055041900D31326 /* birthday-keeper */;
+			targetProxy = 9EFF6D682055041900D31326 /* PBXContainerItemProxy */;
+		};
+		9EFF6D742055041900D31326 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9EFF6D4E2055041900D31326 /* birthday-keeper */;
+			targetProxy = 9EFF6D732055041900D31326 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9EFF6D5D2055041900D31326 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9EFF6D5E2055041900D31326 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9EFF6D792055041900D31326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		9EFF6D7A2055041900D31326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9EFF6D7C2055041900D31326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C8SEQWVLNB;
+				INFOPLIST_FILE = "$(SRCROOT)/config/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "chironyf.birthday-keeper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9EFF6D7D2055041900D31326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C8SEQWVLNB;
+				INFOPLIST_FILE = "$(SRCROOT)/config/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "chironyf.birthday-keeper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9EFF6D7F2055041900D31326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C8SEQWVLNB;
+				INFOPLIST_FILE = "birthday-keeperTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "chironyf.birthday-keeperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/birthday-keeper.app/birthday-keeper";
+			};
+			name = Debug;
+		};
+		9EFF6D802055041900D31326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C8SEQWVLNB;
+				INFOPLIST_FILE = "birthday-keeperTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "chironyf.birthday-keeperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/birthday-keeper.app/birthday-keeper";
+			};
+			name = Release;
+		};
+		9EFF6D822055041900D31326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C8SEQWVLNB;
+				INFOPLIST_FILE = "birthday-keeperUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "chironyf.birthday-keeperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "birthday-keeper";
+			};
+			name = Debug;
+		};
+		9EFF6D832055041900D31326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C8SEQWVLNB;
+				INFOPLIST_FILE = "birthday-keeperUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "chironyf.birthday-keeperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "birthday-keeper";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9EFF6D4A2055041900D31326 /* Build configuration list for PBXProject "birthday-keeper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EFF6D792055041900D31326 /* Debug */,
+				9EFF6D7A2055041900D31326 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EFF6D7B2055041900D31326 /* Build configuration list for PBXNativeTarget "birthday-keeper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EFF6D7C2055041900D31326 /* Debug */,
+				9EFF6D7D2055041900D31326 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EFF6D7E2055041900D31326 /* Build configuration list for PBXNativeTarget "birthday-keeperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EFF6D7F2055041900D31326 /* Debug */,
+				9EFF6D802055041900D31326 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EFF6D812055041900D31326 /* Build configuration list for PBXNativeTarget "birthday-keeperUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EFF6D822055041900D31326 /* Debug */,
+				9EFF6D832055041900D31326 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9EFF6D472055041900D31326 /* Project object */;
+}
