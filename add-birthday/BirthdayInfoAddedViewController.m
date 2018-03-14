@@ -20,8 +20,6 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"添加生日";
-    
-    
     _list = [NSMutableArray<NSMutableArray *> array];
     NSMutableArray *section1 = [@[@"标签"] mutableCopy];
     NSMutableArray *section2 = [@[@"删除生日"] mutableCopy];
@@ -59,7 +57,14 @@
     [self.view addSubview:_tableView];
     [self.view addConstraints:@[tableTop, tableBottom, tableLeft, tableRight, datePickerTop, datePickerLeft, datePickerRight]];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)save {
+    self.returnPromptToBirthdayListBlock(self.birthdayInfo);
+    [self.navigationController popViewControllerAnimated:TRUE];
 }
 
 //选中cell之后返回取消cell的选中状态
@@ -78,6 +83,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         PromptViewController *b = [[PromptViewController alloc] init];
+        //将label text 传到下一个控制器中
+        b.prompt = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+        __weak BirthdayInfoAddedViewController *weakSelf = self;
+        b.returnNewPromptBlock = ^(NSString *newPrompt) {
+            [tableView cellForRowAtIndexPath:indexPath].textLabel.text = newPrompt;
+            weakSelf.birthdayInfo.remindTime = newPrompt;
+        };
+        
         [self.navigationController pushViewController:b animated:YES];
     } else {
         NSLog(@"section2 called");
@@ -92,11 +105,17 @@
     if (cell == nil) {
         NSLog(@"创建了新的单元格");
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
-        cell.textLabel.text = _list[indexPath.section][indexPath.row];
-        if (indexPath.section == 0) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+//        cell.textLabel.text = _list[indexPath.section][indexPath.row];
+        if (indexPath.section == 0) {
+            cell.imageView.image = [UIImage imageNamed:@"标签"];
+            //remindTime实际上是prompt
+            cell.textLabel.text = self.birthdayInfo.remindTime;
+            cell.textLabel.textAlignment = NSTextAlignmentRight;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
         } else {
+            cell.textLabel.text = _list[indexPath.section][indexPath.row];
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = UIColor.redColor;
             

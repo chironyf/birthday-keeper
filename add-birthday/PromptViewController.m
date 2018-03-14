@@ -50,6 +50,9 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    
+    
+    
     NSLog(@"view will appear");
 }
 
@@ -70,13 +73,17 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
     cell.promptEditField.returnKeyType = UIReturnKeyDone;
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    //赋值
+    cell.promptEditField.text = _prompt;
+    
     return cell;
 }
 
 //点击完成会触发该函数
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    
+    self.prompt = textField.text;
+    self.returnNewPromptBlock(self.prompt);
     [self.navigationController popViewControllerAnimated:TRUE];
     return TRUE;
 }

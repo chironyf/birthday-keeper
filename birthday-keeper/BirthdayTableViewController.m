@@ -80,7 +80,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     //    [_birthdayTableView registerClass:[BirthdayCell class] forCellReuseIdentifier:BirthdayCellIdentifier];
 }
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [self.birthdayTableView reloadData];
 }
 
 
@@ -151,27 +151,16 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
         [item.on setOn:FALSE];
         item.isSwitchOn = @"FALSE";
     }
-
-    [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventTouchUpInside];
+    //UIControlEventValueChanged与touchupinside的区别，后者会发生按钮值改变了，但是没有触发点击事件
+    [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
     //每一个cell给table的编辑状态添加观察者，以决定是否隐藏switch
     [self addObserver:item forKeyPath:@"isBirthdayTableEditing" options:NSKeyValueObservingOptionNew context:nil];
 
+    [self setValue:@"FALSE" forKey:@"isBirthdayTableEditing"];
+    
     NSLog(@"第%ld个cell, height = %f", indexPath.row, item.frame.size.height);
     return item;
-}
-
-//isBirthdayTableEditing改变时调用
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    NSLog(@"object = %@", object);
-    if ([keyPath isEqualToString:@"isBirthdayTableEditing"]) {
-        NSString *flag = [change valueForKey:@"new"];
-        if ([flag isEqualToString:@"TRUE"]) {
-            NSLog(@"flag isEqualToString:TRUE");
-        } else {
-            NSLog(@"flag isEqualToString:TRUE");
-        }
-    }
 }
 
 - (void)switchChanged:(id)sender {
@@ -201,6 +190,13 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"当前选中的是第%ld行", indexPath.row);
+    BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
+    b.birthdayInfo =  _birthdayInfo[indexPath.row];
+    __weak BirthdayTableViewController *weakSelf = self;
+    b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *model) {
+        weakSelf.birthdayInfo[indexPath.row] = model;
+    };
+    [self.navigationController pushViewController:b animated:TRUE];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {

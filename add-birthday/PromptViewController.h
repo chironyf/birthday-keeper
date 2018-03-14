@@ -8,13 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^returnNewPrompt)(NSString *newPrompt);
+
 @interface PromptViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextInputTraits>
 
 //接收传过来的prompt
 @property (nonatomic, strong) NSString *prompt;
-
 //就一行
 @property (nonatomic, strong) UITableView *promptTable;
+
+@property (nonatomic, copy)  returnNewPrompt returnNewPromptBlock;
 
 
 @end

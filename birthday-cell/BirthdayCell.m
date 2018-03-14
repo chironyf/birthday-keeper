@@ -70,7 +70,15 @@
             [self.prompt setTextColor:UIColor.blackColor];
             [self.remindTime setTextColor:UIColor.blackColor];
         }
-        
+    }
+    NSLog(@"object = %@", object);
+    if ([keyPath isEqualToString:@"isBirthdayTableEditing"]) {
+        NSString *flag = [change valueForKey:@"new"];
+        if ([flag isEqualToString:@"TRUE"]) {
+            NSLog(@"flag isEqualToString:TRUE");
+        } else {
+            NSLog(@"flag isEqualToString:TRUE");
+        }
     }
 }
 
