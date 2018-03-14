@@ -23,6 +23,9 @@
 //标记是否被取消
 @property (nonatomic, getter=isOn, strong) UISwitch *on;
 
+//用来添加观察
+@property (nonatomic, strong) NSString *isSwitchOn;
+
 + (instancetype)initWithTableView:(UITableView *)tableView andReuseIdentifier:(NSString *)identifier;
 
 @end

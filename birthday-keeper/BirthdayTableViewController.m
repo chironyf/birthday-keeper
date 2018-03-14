@@ -23,10 +23,9 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     [super viewDidLoad];
     //没初始化的话，不会报错，但是没有数据显示
     _birthdayInfo = [[NSMutableArray alloc] init];
-    
-    
+
+    self.isBirthdayTableEditing = @"FALSE";
     self.title = @"生日管家";
-    //    self.navigationItem.title = @"生日管家";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addBirthday)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editBirthday)];
@@ -102,19 +101,23 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 - (void)editBirthday {
 
     [_birthdayTableView setEditing:TRUE animated:TRUE];
+    self.isBirthdayTableEditing = @"TRUE";
 
     //不设置为true的时候，编辑状态下无法响应cell的didselect
     [_birthdayTableView setAllowsSelectionDuringEditing:TRUE];
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finishEditBirthday)];
     
 }
 
 - (void)finishEditBirthday {
     [_birthdayTableView setEditing:FALSE animated:TRUE];
-
+    self.isBirthdayTableEditing = @"FALSE";
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editBirthday)];
-}
+    //添加reloadData动画
 
+}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -139,15 +142,50 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     [item.prompt setText:_birthdayInfo[indexPath.row].prompt];
     [item.createdTime setText:_birthdayInfo[indexPath.row].createdTime];
     [item.remindTime setText:_birthdayInfo[indexPath.row].remindTime];
-    [item.on setOn:_birthdayInfo[indexPath.row].isOn];
+    //保持数据与视图显示的数据一致
+    
+    if (_birthdayInfo[indexPath.row].isOn) {
+        [item.on setOn:TRUE];
+        item.isSwitchOn = @"TRUE";
+    } else {
+        [item.on setOn:FALSE];
+        item.isSwitchOn = @"FALSE";
+    }
 
-    //设置所有cell为不可编辑状态;
-    [item setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //每一个cell给table的编辑状态添加观察者，以决定是否隐藏switch
+    [self addObserver:item forKeyPath:@"isBirthdayTableEditing" options:NSKeyValueObservingOptionNew context:nil];
 
     NSLog(@"第%ld个cell, height = %f", indexPath.row, item.frame.size.height);
     return item;
 }
 
+//isBirthdayTableEditing改变时调用
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSLog(@"object = %@", object);
+    if ([keyPath isEqualToString:@"isBirthdayTableEditing"]) {
+        NSString *flag = [change valueForKey:@"new"];
+        if ([flag isEqualToString:@"TRUE"]) {
+            NSLog(@"flag isEqualToString:TRUE");
+        } else {
+            NSLog(@"flag isEqualToString:TRUE");
+        }
+    }
+}
+
+- (void)switchChanged:(id)sender {
+    BirthdayCell *curCell = (BirthdayCell *)[[sender superview] superview];
+    NSIndexPath *curIndexPath = [_birthdayTableView indexPathForCell:curCell];
+    if ([curCell.isSwitchOn isEqualToString:@"TRUE"]) {
+        curCell.isSwitchOn = @"FALSE";
+        _birthdayInfo[curIndexPath.row].on = FALSE;
+    } else {
+        curCell.isSwitchOn = @"TRUE";
+        _birthdayInfo[curIndexPath.row].on = TRUE;
+    }
+    
+}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     

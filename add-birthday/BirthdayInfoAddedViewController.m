@@ -19,15 +19,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"添加生日";
+    
+    
     _list = [NSMutableArray<NSMutableArray *> array];
     NSMutableArray *section1 = [@[@"标签"] mutableCopy];
     NSMutableArray *section2 = [@[@"删除生日"] mutableCopy];
     [_list addObject:section1];
     [_list addObject:section2];
-    
-    
-    self.navigationItem.title = @"添加生日";
-    
+
     self.view.backgroundColor = UIColor.whiteColor;
     _datePicker = [[UIDatePicker alloc] init];
     [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
@@ -47,7 +47,6 @@
     NSLayoutConstraint *datePickerLeft = [NSLayoutConstraint constraintWithItem:_datePicker attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
     
     NSLayoutConstraint *datePickerRight = [NSLayoutConstraint constraintWithItem:_datePicker attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0];
-    
     
     NSLayoutConstraint *tableTop = [NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_datePicker attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     
