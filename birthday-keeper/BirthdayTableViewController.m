@@ -195,10 +195,10 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     NSIndexPath *curIndexPath = [_birthdayTableView indexPathForCell:curCell];
     if ([curCell.isSwitchOn isEqualToString:@"TRUE"]) {
         curCell.isSwitchOn = @"FALSE";
-        _birthdayInfo[curIndexPath.row].on = FALSE;
+        self.birthdayInfo[curIndexPath.row].on = FALSE;
     } else {
         curCell.isSwitchOn = @"TRUE";
-        _birthdayInfo[curIndexPath.row].on = TRUE;
+        self.birthdayInfo[curIndexPath.row].on = TRUE;
     }
     
 }
