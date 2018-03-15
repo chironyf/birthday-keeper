@@ -109,7 +109,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     b.isAdd = @"TRUE";
     self.curIndex = -1;
     //清空数据
-    [_tempCellModel clear];
+    [self.tempCellModel clear];
     
     b.tempBirthdayInfo = _tempCellModel;
  
