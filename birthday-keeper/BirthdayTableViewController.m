@@ -187,12 +187,6 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     //UIControlEventValueChanged与touchupinside的区别，后者会发生按钮值改变了，但是没有触发点击事件
     [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
-    //每一个cell给table的编辑状态添加观察者，以决定是否隐藏switch
-//    [self addObserver:item forKeyPath:@"isBirthdayTableEditing" options:NSKeyValueObservingOptionNew context:nil];
-
-//    [self setValue:@"FALSE" forKey:@"isBirthdayTableEditing"];
-//
-//    NSLog(@"第%ld个cell, height = %f", indexPath.row, item.frame.size.height);
     return item;
 }
 
