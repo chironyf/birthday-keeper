@@ -22,5 +22,25 @@
     return self;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _prompt = @"";
+        _createdTime = @"";
+        _remindTime = @"";
+        _cellHeight = 0.0f;
+        _on = FALSE;
+    }
+    return self;
+}
+
+- (void)clear {
+    _prompt = @"";
+    _createdTime = @"";
+    _remindTime = @"";
+    _cellHeight = 0.0f;
+    _on = FALSE;
+}
+
 
 @end

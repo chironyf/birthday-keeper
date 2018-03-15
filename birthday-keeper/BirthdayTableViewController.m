@@ -23,6 +23,11 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     [super viewDidLoad];
     //没初始化的话，不会报错，但是没有数据显示
     _birthdayInfo = [[NSMutableArray alloc] init];
+    //第一次加载初始化中介
+    _tempCellModel = [[BirthdayCellModel alloc] init];
+    _curIndex = -1;
+    
+    [self addObserver:self forKeyPath:@"isSaved" options:NSKeyValueObservingOptionNew context:nil];
 
     self.isBirthdayTableEditing = @"FALSE";
     self.title = @"生日管家";
@@ -79,22 +84,46 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     //
     //    [_birthdayTableView registerClass:[BirthdayCell class] forCellReuseIdentifier:BirthdayCellIdentifier];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
-    [self.birthdayTableView reloadData];
+
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSString *flag = [change objectForKey:@"new"];
+    if ([keyPath isEqualToString:@"isSaved"]) {
+        if ([flag isEqualToString:@"TRUE"] && self.curIndex == -1) {
+            [self.birthdayInfo insertObject:_tempCellModel atIndex:0];
+        } else if ([flag isEqualToString:@"TRUE"] && self.curIndex != -1) {
+            self.birthdayInfo[_curIndex] = _tempCellModel;
+        }
+        [self.birthdayTableView reloadData];
+    }
+}
 
+//添加的时候，需要将新的信息插入
 - (void)addBirthday {
     BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
-//    CATransition *transition = [CATransition animation];
-//    transition.duration = 0.6f;
-//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
-//    transition.type = kCATransitionFromBottom;
-//    transition.subtype = kCATransitionFromTop;
-////    transition.delegate = self;
-//    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//    self.navigationController.navigationBarHidden = NO;
+    //表示添加新的info,直接传一个空的过去
+    [b addObserver:b forKeyPath:@"isAdd" options:NSKeyValueObservingOptionNew context:nil];
+    b.isAdd = @"TRUE";
+    self.curIndex = -1;
+    //清空数据
+    [_tempCellModel clear];
+    
+    b.tempBirthdayInfo = _tempCellModel;
  
+    __weak BirthdayTableViewController *weakSelf = self;
+    
+    //在编辑vc中，返回时调用block给其赋值
+    b.isSavedBlock = ^(NSString *isSaved) {
+        weakSelf.isSaved = isSaved;
+    };
+    
+    b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *bcm) {
+        weakSelf.tempCellModel = bcm;
+    };
+
     [self.navigationController pushViewController:b animated:YES];
 }
 
@@ -117,6 +146,10 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editBirthday)];
     //添加reloadData动画
 
+}
+
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"isSaved"];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,11 +188,11 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
     //每一个cell给table的编辑状态添加观察者，以决定是否隐藏switch
-    [self addObserver:item forKeyPath:@"isBirthdayTableEditing" options:NSKeyValueObservingOptionNew context:nil];
+//    [self addObserver:item forKeyPath:@"isBirthdayTableEditing" options:NSKeyValueObservingOptionNew context:nil];
 
-    [self setValue:@"FALSE" forKey:@"isBirthdayTableEditing"];
-    
-    NSLog(@"第%ld个cell, height = %f", indexPath.row, item.frame.size.height);
+//    [self setValue:@"FALSE" forKey:@"isBirthdayTableEditing"];
+//
+//    NSLog(@"第%ld个cell, height = %f", indexPath.row, item.frame.size.height);
     return item;
 }
 
@@ -189,13 +222,25 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"当前选中的是第%ld行", indexPath.row);
+//    NSLog(@"当前选中的是第%d行", (long)indexPath.row);
     BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
-    b.birthdayInfo =  _birthdayInfo[indexPath.row];
+    
+    
+    self.curIndex = indexPath.row;
+    self.tempCellModel = _birthdayInfo[_curIndex];
+    //标志不是添加而是选择的cell
+    [b addObserver:b forKeyPath:@"isAdd" options:NSKeyValueObservingOptionNew context:nil];
+    b.isAdd = @"FALSE";
+    b.tempBirthdayInfo = _tempCellModel;
+    
     __weak BirthdayTableViewController *weakSelf = self;
     b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *model) {
-        weakSelf.birthdayInfo[indexPath.row] = model;
+        weakSelf.tempCellModel = model;
     };
+    b.isSavedBlock = ^(NSString *isSaved) {
+        weakSelf.isSaved = isSaved;
+    };
+    
     [self.navigationController pushViewController:b animated:TRUE];
 }
 

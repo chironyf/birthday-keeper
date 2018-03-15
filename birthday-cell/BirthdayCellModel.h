@@ -23,4 +23,8 @@
 
 - (instancetype)initWithPrompt:(NSString *)prompt CreatedTime:(NSString *)createdTime RemindTime:(NSString *)remindTime Height:(double)cellHeight;
 
+- (instancetype)init;
+//清空数据
+- (void)clear;
+
 @end

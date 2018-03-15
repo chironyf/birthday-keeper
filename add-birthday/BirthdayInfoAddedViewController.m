@@ -19,7 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"添加生日";
+    self.birthdayInfo = _tempBirthdayInfo;
+    
     _list = [NSMutableArray<NSMutableArray *> array];
     NSMutableArray *section1 = [@[@"标签"] mutableCopy];
     NSMutableArray *section2 = [@[@"删除生日"] mutableCopy];
@@ -59,11 +60,37 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    
     // Do any additional setup after loading the view.
 }
 
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"isAdd"]) {
+        NSString *flag = [change objectForKey:@"new"];
+        if ([flag isEqualToString:@"TRUE"]) {
+            self.title = @"添加";
+        } else if ([flag isEqualToString:@"FALSE"]) {
+            self.title = @"bianji";
+        }
+    }
+}
+
 - (void)save {
-    self.returnPromptToBirthdayListBlock(self.birthdayInfo);
+    self.tempBirthdayInfo = _birthdayInfo;
+    self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
+    self.isSavedBlock(@"TRUE");
+    [self removeObserver:self forKeyPath:@"isAdd"];
+    [self.navigationController popViewControllerAnimated:TRUE];
+}
+
+- (void)cancel {
+    
+    self.tempBirthdayInfo = _birthdayInfo;
+    self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
+    self.isSavedBlock(@"FALSE");
+    [self removeObserver:self forKeyPath:@"isAdd"];
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
