@@ -115,6 +115,7 @@
         [self.navigationController pushViewController:b animated:YES];
     } else {
         NSLog(@"section2 called");
+        [self removeObserver:self forKeyPath:@"isAdd"];
         [self.navigationController popViewControllerAnimated:TRUE];
     }
 }
