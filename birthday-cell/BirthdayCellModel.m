@@ -42,8 +42,18 @@
     _on = TRUE;
 }
 
--(NSString *)description {
+- (NSString *)description {
     return self.remindTime;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    BirthdayCellModel * copyedModel = [[self.class allocWithZone:zone] init];
+    copyedModel.prompt = self.prompt;
+    copyedModel.createdTime = self.createdTime;
+    copyedModel.cellHeight = self.cellHeight;
+    copyedModel.remindTime = self.remindTime;
+    copyedModel.on = self.on;
+    return copyedModel;
 }
 
 

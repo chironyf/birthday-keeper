@@ -22,7 +22,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     //没初始化的话，不会报错，但是没有数据显示
-    _birthdayInfo = [[NSMutableArray alloc] init];
+    _birthdayInfo = [NSMutableArray array];
     //第一次加载初始化中介
     _tempCellModel = [[BirthdayCellModel alloc] init];
     _curIndex = -1;
@@ -118,18 +118,18 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     //清空数据
     [self.tempCellModel clear];
     
-    b.tempBirthdayInfo = _tempCellModel;
+    b.tempBirthdayInfo = [_tempCellModel copy];
  
     __weak BirthdayTableViewController *weakSelf = self;
     
     //在编辑vc中，返回时调用block给其赋值
     b.isSavedBlock = ^(NSString *isSaved) {
-        weakSelf.isSaved = isSaved;
+        weakSelf.isSaved = [isSaved copy];
         NSLog(@"btlvc is saved block called, isSaved = %@", weakSelf.isSaved);
     };
     
     b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *bcm) {
-        weakSelf.tempCellModel = bcm;
+        weakSelf.tempCellModel = [bcm copy];
         NSLog(@"btlvc received bcm in tempCellModel");
     };
 
@@ -230,7 +230,8 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
     
     self.curIndex = indexPath.row;
-    self.tempCellModel = _birthdayInfo[_curIndex];
+    //一定要注意这里，不用copy的话会直接改掉原数组中的元素
+    self.tempCellModel = [_birthdayInfo[_curIndex] copy];
     b.tempBirthdayInfo = self.tempCellModel;
     //标志不是添加而是选择的cell
     [b addObserver:b forKeyPath:@"isAdd" options:NSKeyValueObservingOptionNew context:nil];
@@ -238,11 +239,11 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     
     __weak BirthdayTableViewController *weakSelf = self;
     b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *model) {
-        weakSelf.tempCellModel = model;
+        weakSelf.tempCellModel = [model copy];
         NSLog(@"select cell 返回，收到数据 tempCellModel = %@;", model);
     };
     b.isSavedBlock = ^(NSString *isSaved) {
-        weakSelf.isSaved = isSaved;
+        weakSelf.isSaved = [isSaved copy];
         NSLog(@"select cell 返回，weakSelf.isSaved = %@", isSaved);
     };
     

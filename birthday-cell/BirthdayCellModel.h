@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BirthdayCellModel : NSObject
+@interface BirthdayCellModel : NSObject <NSCopying>
 
 @property (nonatomic, strong) NSString *prompt;
 
