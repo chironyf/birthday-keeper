@@ -29,7 +29,7 @@
         _createdTime = @"";
         _remindTime = @"";
         _cellHeight = 0.0f;
-        _on = FALSE;
+        _on = TRUE;
     }
     return self;
 }
@@ -39,7 +39,11 @@
     _createdTime = @"";
     _remindTime = @"";
     _cellHeight = 0.0f;
-    _on = FALSE;
+    _on = TRUE;
+}
+
+-(NSString *)description {
+    return self.remindTime;
 }
 
 

@@ -35,7 +35,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(editBirthday)];
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
         NSDate *date = [NSDate date];
         NSTimeInterval sec = [date timeIntervalSinceNow];
         NSDate *currentDate = [[NSDate alloc] initWithTimeIntervalSinceNow:sec];
@@ -74,15 +74,9 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     
     [self.view addConstraints:@[birthdayTableViewLeft, birthdayTableViewRight, birthdayTableViewTop, birthdayTableViewBottom]];
     
-    
-    // Do any additional setup after loading the view, typically from a nib.
-    
     _birthdayTableView.estimatedRowHeight = 88;
     _birthdayTableView.rowHeight = UITableViewAutomaticDimension;
     
-    //    [_birthdayTableView registerClass:[BirthdayCell class] forCellReuseIdentifier:BirthdayCellIdentifier];
-    //
-    //    [_birthdayTableView registerClass:[BirthdayCell class] forCellReuseIdentifier:BirthdayCellIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,14 +84,27 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    NSString *flag = [change objectForKey:@"new"];
+    
     if ([keyPath isEqualToString:@"isSaved"]) {
+        NSString *flag = [change objectForKey:@"new"];
         if ([flag isEqualToString:@"TRUE"] && self.curIndex == -1) {
+            NSLog(@"保存了新的添加");
             [self.birthdayInfo insertObject:_tempCellModel atIndex:0];
+            [self.birthdayTableView reloadData];
         } else if ([flag isEqualToString:@"TRUE"] && self.curIndex != -1) {
-            self.birthdayInfo[_curIndex] = _tempCellModel;
+            NSLog(@"保存了cell的编辑");
+            
+            [self.birthdayInfo replaceObjectAtIndex:_curIndex withObject:_tempCellModel];
+            [self.birthdayTableView reloadData];
+        } else if ([flag isEqualToString:@"FALSE"]) {
+            //do nothing
+             NSLog(@"取消");
+            [self.birthdayTableView reloadData];
         }
-        [self.birthdayTableView reloadData];
+        NSLog(@"当前list行数 = %ld", [self.birthdayInfo count]);
+        for (int i = 0; i < self.birthdayInfo.count; i++) {
+            NSLog(@"%@", self.birthdayInfo[i]);
+        }
     }
 }
 
@@ -118,10 +125,12 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     //在编辑vc中，返回时调用block给其赋值
     b.isSavedBlock = ^(NSString *isSaved) {
         weakSelf.isSaved = isSaved;
+        NSLog(@"btlvc is saved block called, isSaved = %@", weakSelf.isSaved);
     };
     
     b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *bcm) {
         weakSelf.tempCellModel = bcm;
+        NSLog(@"btlvc received bcm in tempCellModel");
     };
 
     [self.navigationController pushViewController:b animated:YES];
@@ -154,10 +163,11 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CGSize height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//    CGSize height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//    
+//    CGFloat h = cell.frame.size.height;
+//    NSLog(@"willDisplayCell, frame height = %f, systemLayoutSizeFittingSize = %f", h, height.height);
     
-    CGFloat h = cell.frame.size.height;
-    NSLog(@"willDisplayCell, frame height = %f, systemLayoutSizeFittingSize = %f", h, height.height);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -176,7 +186,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
     [item.createdTime setText:_birthdayInfo[indexPath.row].createdTime];
     [item.remindTime setText:_birthdayInfo[indexPath.row].remindTime];
     //保持数据与视图显示的数据一致
-    
+    [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     if (_birthdayInfo[indexPath.row].isOn) {
         [item.on setOn:TRUE];
         item.isSwitchOn = @"TRUE";
@@ -185,7 +195,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
         item.isSwitchOn = @"FALSE";
     }
     //UIControlEventValueChanged与touchupinside的区别，后者会发生按钮值改变了，但是没有触发点击事件
-    [item.on addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+
     
     return item;
 }
@@ -200,11 +210,11 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
         curCell.isSwitchOn = @"TRUE";
         self.birthdayInfo[curIndexPath.row].on = TRUE;
     }
-    
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self.birthdayInfo removeObjectAtIndex:indexPath.row];
+    [self.birthdayTableView reloadData];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -219,20 +229,21 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 //    NSLog(@"当前选中的是第%d行", (long)indexPath.row);
     BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
     
-    
     self.curIndex = indexPath.row;
     self.tempCellModel = _birthdayInfo[_curIndex];
+    b.tempBirthdayInfo = self.tempCellModel;
     //标志不是添加而是选择的cell
     [b addObserver:b forKeyPath:@"isAdd" options:NSKeyValueObservingOptionNew context:nil];
     b.isAdd = @"FALSE";
-    b.tempBirthdayInfo = _tempCellModel;
     
     __weak BirthdayTableViewController *weakSelf = self;
     b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *model) {
         weakSelf.tempCellModel = model;
+        NSLog(@"select cell 返回，收到数据 tempCellModel = %@;", model);
     };
     b.isSavedBlock = ^(NSString *isSaved) {
         weakSelf.isSaved = isSaved;
+        NSLog(@"select cell 返回，weakSelf.isSaved = %@", isSaved);
     };
     
     [self.navigationController pushViewController:b animated:TRUE];

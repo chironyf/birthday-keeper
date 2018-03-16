@@ -71,7 +71,7 @@
             [self.remindTime setTextColor:UIColor.blackColor];
         }
     }
-    NSLog(@"object = %@", object);
+//    NSLog(@"object = %@", object);
     if ([keyPath isEqualToString:@"isBirthdayTableEditing"]) {
         NSString *flag = [change valueForKey:@"new"];
         if ([flag isEqualToString:@"TRUE"]) {
@@ -83,14 +83,16 @@
 }
 
 //
-//- (void)dealloc {
-//    [self removeObserver:self forKeyPath:@"on"];
-//}
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"isSwitchOn"];
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
+
+
 
 @end

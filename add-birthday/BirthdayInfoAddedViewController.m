@@ -19,8 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.birthdayInfo = _tempBirthdayInfo;
-    
     _list = [NSMutableArray<NSMutableArray *> array];
     NSMutableArray *section1 = [@[@"标签"] mutableCopy];
     NSMutableArray *section2 = [@[@"删除生日"] mutableCopy];
@@ -72,13 +70,12 @@
         if ([flag isEqualToString:@"TRUE"]) {
             self.title = @"添加";
         } else if ([flag isEqualToString:@"FALSE"]) {
-            self.title = @"bianji";
+            self.title = @"编辑";
         }
     }
 }
 
 - (void)save {
-    self.tempBirthdayInfo = _birthdayInfo;
     self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
     self.isSavedBlock(@"TRUE");
     [self removeObserver:self forKeyPath:@"isAdd"];
@@ -86,8 +83,6 @@
 }
 
 - (void)cancel {
-    
-    self.tempBirthdayInfo = _birthdayInfo;
     self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
     self.isSavedBlock(@"FALSE");
     [self removeObserver:self forKeyPath:@"isAdd"];
@@ -115,9 +110,8 @@
         __weak BirthdayInfoAddedViewController *weakSelf = self;
         b.returnNewPromptBlock = ^(NSString *newPrompt) {
             [tableView cellForRowAtIndexPath:indexPath].textLabel.text = newPrompt;
-            weakSelf.birthdayInfo.remindTime = newPrompt;
+            weakSelf.tempBirthdayInfo.remindTime = newPrompt;
         };
-        
         [self.navigationController pushViewController:b animated:YES];
     } else {
         NSLog(@"section2 called");
@@ -133,19 +127,16 @@
         NSLog(@"创建了新的单元格");
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
         
-//        cell.textLabel.text = _list[indexPath.section][indexPath.row];
         if (indexPath.section == 0) {
             cell.imageView.image = [UIImage imageNamed:@"标签"];
             //remindTime实际上是prompt
-            cell.textLabel.text = self.birthdayInfo.remindTime;
+            cell.textLabel.text = self.tempBirthdayInfo.remindTime;
             cell.textLabel.textAlignment = NSTextAlignmentRight;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
         } else {
             cell.textLabel.text = _list[indexPath.section][indexPath.row];
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = UIColor.redColor;
-            
         }
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
