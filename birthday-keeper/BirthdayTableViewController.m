@@ -89,12 +89,12 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
         NSString *flag = [change objectForKey:@"new"];
         if ([flag isEqualToString:@"TRUE"] && self.curIndex == -1) {
             NSLog(@"保存了新的添加");
-            [self.birthdayInfo insertObject:_tempCellModel atIndex:0];
+            [self.birthdayInfo insertObject:[_tempCellModel copy] atIndex:0];
             [self.birthdayTableView reloadData];
         } else if ([flag isEqualToString:@"TRUE"] && self.curIndex != -1) {
             NSLog(@"保存了cell的编辑");
             
-            [self.birthdayInfo replaceObjectAtIndex:_curIndex withObject:_tempCellModel];
+            [self.birthdayInfo replaceObjectAtIndex:_curIndex withObject:[_tempCellModel copy]];
             [self.birthdayTableView reloadData];
         } else if ([flag isEqualToString:@"FALSE"]) {
             //do nothing
