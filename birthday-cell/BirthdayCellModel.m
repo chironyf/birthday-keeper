@@ -10,7 +10,7 @@
 
 @implementation BirthdayCellModel
 
-- (instancetype)initWithPrompt:(NSString *)prompt CreatedTime:(NSString *)createdTime RemindTime:(NSString *)remindTime Height:(double)cellHeight {
+- (instancetype)initWithPrompt:(NSDate *)prompt CreatedTime:(NSString *)createdTime RemindTime:(NSString *)remindTime Height:(double)cellHeight {
     self = [super init];
     if (self) {
         _prompt = prompt;
@@ -25,7 +25,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _prompt = @"";
+        _prompt = [NSDate date];
         _createdTime = @"";
         _remindTime = @"";
         _cellHeight = 0.0f;
@@ -35,7 +35,7 @@
 }
 
 - (void)clear {
-    _prompt = @"";
+    _prompt = [NSDate date];
     _createdTime = @"";
     _remindTime = @"";
     _cellHeight = 0.0f;

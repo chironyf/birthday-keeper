@@ -10,7 +10,8 @@
 
 @interface BirthdayCellModel : NSObject <NSCopying>
 
-@property (nonatomic, strong) NSString *prompt;
+//设置为日期类型
+@property (nonatomic, strong) NSDate *prompt;
 
 @property (nonatomic, strong) NSString *createdTime;
 

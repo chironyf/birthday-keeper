@@ -46,10 +46,10 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
         NSString *na = [df stringFromDate:currentDate];
         
         if (i % 2 == 0) {
-            BirthdayCellModel *item = [[BirthdayCellModel alloc] initWithPrompt:@"09月14日" CreatedTime:na RemindTime:na Height:0.0f];
+            BirthdayCellModel *item = [[BirthdayCellModel alloc] initWithPrompt:date CreatedTime:na RemindTime:na Height:0.0f];
             [_birthdayInfo addObject:item];
         } else {
-            BirthdayCellModel *item = [[BirthdayCellModel alloc] initWithPrompt:@"09月14日" CreatedTime:[NSString stringWithFormat:@"这发素返回加快速度发是好过分放寒假倒计时咖啡符合健康的撒后方可返回的手机卡花覅合肥的还符号阿富汗凯撒红福克斯是第%@条提醒", na] RemindTime:na Height:0.0f];
+            BirthdayCellModel *item = [[BirthdayCellModel alloc] initWithPrompt:date CreatedTime:[NSString stringWithFormat:@"这发素返回加快速度发是好过分放寒假倒计时咖啡符合健康的撒后方可返回的手机卡花覅合肥的还符号阿富汗凯撒红福克斯是第%@条提醒", na] RemindTime:na Height:0.0f];
             [_birthdayInfo addObject:item];
         }
         
@@ -100,8 +100,13 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
             //do nothing
              NSLog(@"取消");
             [self.birthdayTableView reloadData];
+        } else if ([flag isEqualToString:@"DELETE"] && _curIndex != -1) {
+            [self.birthdayInfo removeObjectAtIndex:_curIndex];
+            [self.birthdayTableView reloadData];
         }
-        NSLog(@"当前list行数 = %ld", [self.birthdayInfo count]);
+        
+        
+        NSLog(@"当前list行数 = %lu", (unsigned long)[self.birthdayInfo count]);
         for (int i = 0; i < self.birthdayInfo.count; i++) {
             NSLog(@"%@", self.birthdayInfo[i]);
         }
@@ -180,9 +185,21 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    
     BirthdayCell *item = [BirthdayCell initWithTableView:tableView andReuseIdentifier:BirthdayCellIdentifier];
 
-    [item.prompt setText:_birthdayInfo[indexPath.row].prompt];
+    //设置时间
+    NSDate *date = _birthdayInfo[indexPath.row].prompt;
+    NSTimeInterval sec = [date timeIntervalSinceNow];
+    NSDate *currentDate = [[NSDate alloc] initWithTimeIntervalSinceNow:sec];
+    
+    //设置时间输出格式：
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"MM月dd日"];
+    NSString *na = [df stringFromDate:currentDate];
+    
+    [item.prompt setText:na];
+    
     [item.createdTime setText:_birthdayInfo[indexPath.row].createdTime];
     [item.remindTime setText:_birthdayInfo[indexPath.row].remindTime];
     //保持数据与视图显示的数据一致
@@ -253,6 +270,7 @@ static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除";
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -10,6 +10,7 @@
 #import "RootViewController.h"
 #import "BirthdayTableViewController.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -18,6 +19,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+    [application registerUserNotificationSettings:settings];
+
+    
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BirthdayTableViewController *btvc = [[BirthdayTableViewController alloc] init];
     RootViewController *viewController = [[RootViewController alloc] initWithRootViewController:btvc];

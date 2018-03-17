@@ -12,12 +12,22 @@
 
 @interface BirthdayInfoAddedViewController ()
 
+
+@property (nonatomic, strong) UILocalNotification *notifi;
 @end
 
 @implementation BirthdayInfoAddedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    
+//    [self addNotification];
     
     _list = [NSMutableArray<NSMutableArray *> array];
     NSMutableArray *section1 = [@[@"标签"] mutableCopy];
@@ -27,8 +37,11 @@
 
     self.view.backgroundColor = UIColor.whiteColor;
     _datePicker = [[UIDatePicker alloc] init];
-    [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    [_datePicker setDatePickerMode:UIDatePickerModeDate];
     _datePicker.translatesAutoresizingMaskIntoConstraints = NO;
+    [_datePicker setDate:_tempBirthdayInfo.prompt];
+//    NSDate *maxDate = [NSDate alloc] init
+//    _datePicker.maximumDate = [NSDate alloc] init
     [self.view addSubview:_datePicker];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
@@ -64,6 +77,24 @@
 }
 
 
+- (void)enterBackground {
+    NSLog(@"(void)addNotification");
+    _notifi = [[UILocalNotification alloc] init];
+    //5s
+    _notifi.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    _notifi.repeatInterval =  kCFCalendarUnitMinute;
+    
+    _notifi.alertBody = @"birdat eee";
+    
+    _notifi.userInfo = @{@"key":@"value"};
+    [[UIApplication sharedApplication] scheduleLocalNotification:_notifi];
+
+}
+
+- (void)enterForeground {
+    [[UIApplication sharedApplication] cancelLocalNotification:_notifi];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"isAdd"]) {
         NSString *flag = [change objectForKey:@"new"];
@@ -76,6 +107,7 @@
 }
 
 - (void)save {
+    self.tempBirthdayInfo.prompt = [_datePicker date];
     self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
     self.isSavedBlock(@"TRUE");
     [self removeObserver:self forKeyPath:@"isAdd"];
@@ -115,6 +147,8 @@
         [self.navigationController pushViewController:b animated:YES];
     } else {
         NSLog(@"section2 called");
+        self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
+        self.isSavedBlock(@"DELETE");
         [self removeObserver:self forKeyPath:@"isAdd"];
         [self.navigationController popViewControllerAnimated:TRUE];
     }
