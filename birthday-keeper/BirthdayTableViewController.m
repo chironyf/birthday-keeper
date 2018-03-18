@@ -11,6 +11,7 @@
 #import "BirthdayCellModel.h"
 #import "BirthdayInfoAddedViewController.h"
 #import "GCON.h"
+#import <UserNotifications/UserNotifications.h>
 
 static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
 //作为同步属性的全局变量
@@ -31,13 +32,6 @@ static int curBirthdayInfoCount = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     //没初始化的话，不会报错，但是没有数据显示
-   
-    if (externBirthdayInfo == nil) {
-        externBirthdayInfo = [NSMutableArray array];
-        _birthdayInfo = [NSMutableArray array];
-    } else {
-        _birthdayInfo = [externBirthdayInfo mutableCopy];
-    }
     
     [self addObserver:self forKeyPath:@"birthdayInfo" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -56,8 +50,6 @@ static int curBirthdayInfoCount = 0;
     
     self.title = @"生日管家";
     
-    
-    
     //第一次进入在位读取数据时, editing 为 false, 编辑按钮灰, 添加按钮亮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addBirthday)];
     
@@ -65,7 +57,9 @@ static int curBirthdayInfoCount = 0;
     self.finished = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finishEditBirthday)];
     
     self.navigationItem.leftBarButtonItem = _edit;
-    self.navigationItem.leftBarButtonItem.enabled = FALSE;
+    if (curBirthdayInfoCount == 0) {
+        self.navigationItem.leftBarButtonItem.enabled = FALSE;
+    }
     
     _birthdayTableView = [[UITableView alloc] init];
     
@@ -104,8 +98,9 @@ static int curBirthdayInfoCount = 0;
     _birthdayTableView.estimatedRowHeight = 88;
     _birthdayTableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.birthdayTableView.editing = FALSE;
     
+    self.birthdayTableView.editing = FALSE;
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -294,8 +289,6 @@ static int curBirthdayInfoCount = 0;
         item.isSwitchOn = @"FALSE";
     }
     //UIControlEventValueChanged与touchupinside的区别，后者会发生按钮值改变了，但是没有触发点击事件
-
-    
     return item;
 }
 
@@ -320,12 +313,40 @@ static int curBirthdayInfoCount = 0;
 
 //添加本地推送
 - (void)addLocalNotifications:(BirthdayCellModel *)bcm {
-    NSLog(@"addLocalNotifications");
+    // 初始化本地通知
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    // 通知触发时间
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    localNotification.timeZone = [NSTimeZone systemTimeZone];
+    // 触发后，弹出警告框中显示的内容
+    localNotification.alertBody = bcm.remindTime;
+    // 触发时的声音（这里选择的系统默认声音）
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    // 触发频率（repeatInterval是一个枚举值，可以选择每分、每小时、每天、每年等）
+    localNotification.repeatInterval = NSCalendarUnitYear;
+    // 需要在App icon上显示的未读通知数（设置为1时，多个通知未读，系统会自动加1，如果不需要显示未读数，这里可以设置0）
+    localNotification.applicationIconBadgeNumber = 1;
+    // 设置通知的id，可用于通知移除，也可以传递其他值，当通知触发时可以获取
+    localNotification.userInfo = @{@"id" : bcm.remindTime};
+    // 注册本地通知
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
 //取消本地推送
 - (void)cancelLocalNotifications:(BirthdayCellModel *)bcm {
-    NSLog(@"cancelLocalNotifications:");
+    // 取出全部本地通知
+    NSArray *notifications = [UIApplication sharedApplication].scheduledLocalNotifications;
+    // 设置要移除的通知id
+//    NSDate *notificationId = bcm.prompt;
+    NSString *notificationId = bcm.remindTime;
+    // 遍历进行移除
+    for (UILocalNotification *localNotification in notifications) {
+        // 将每个通知的id取出来进行对比
+        NSLog(@"%@", [localNotification.userInfo objectForKey:@"id"]);
+        if ([[localNotification.userInfo objectForKey:@"id"] isEqualToString:notificationId]) {
+            [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -333,11 +354,16 @@ static int curBirthdayInfoCount = 0;
     [[self mutableArrayValueForKeyPath:@"birthdayInfo"] removeObjectAtIndex:indexPath.row];
     [externBirthdayInfo removeObjectAtIndex:indexPath.row];
     
-//    [self.birthdayInfo removeObjectAtIndex:indexPath.row];
     NSArray<NSIndexPath *> *d = @[indexPath];
     BirthdayCell *c = [self.birthdayTableView cellForRowAtIndexPath:indexPath];
     if ([c.isSwitchOn isEqualToString:@"TRUE"]) {
-        NSLog(@"取消推送 %@, 标签 = %@",  c.date, c.remindTime.text);
+        NSArray *notifications = [UIApplication sharedApplication].scheduledLocalNotifications;
+        NSString *notificationId = c.remindTime.text;
+        for (UILocalNotification *localNotification in notifications) {
+            if ([[localNotification.userInfo objectForKey:@"id"] isEqualToString:notificationId]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
+            }
+        }
     }
     
     [self.birthdayTableView deleteRowsAtIndexPaths:d withRowAnimation:UITableViewRowAnimationLeft];

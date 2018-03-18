@@ -28,15 +28,16 @@
     BirthdayTableViewController *btvc = [[BirthdayTableViewController alloc] init];
  
     //读取文件
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *birthdayFileName = [path stringByAppendingPathComponent:@"birthdayFileName.plist"];
-    
-    NSArray *result = [NSArray arrayWithContentsOfFile:birthdayFileName];
 
-    externBirthdayInfo = [result mutableCopy];
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *birthdayData = [defaults objectForKey:@"birthdayInfoList"];
+    if (birthdayData == nil) {
+        externBirthdayInfo = [NSMutableArray array];
+    } else {
+        externBirthdayInfo = (NSMutableArray<BirthdayCellModel *> *)[NSKeyedUnarchiver unarchiveObjectWithData:birthdayData];
+    }
     btvc.birthdayInfo = [externBirthdayInfo mutableCopy];
-
+ 
     RootViewController *viewController = [[RootViewController alloc] initWithRootViewController:btvc];
     [_window setBackgroundColor:UIColor.blackColor];
     [_window setRootViewController:viewController];
@@ -53,11 +54,17 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *birthdayFileName = [path stringByAppendingPathComponent:@"birthdayFileName.plist"];
-    
-    NSArray *a = [externBirthdayInfo copy];
-    [a writeToFile:birthdayFileName atomically:YES];
+    //    NSData *encodedCurBirdSightingList = [NSKeyedArchiver archivedDataWithRootObject:self.masterBirdSightingList];
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //    [defaults setObject:encodedCurBirdSightingList forKey:@"BirdSightingList"];
+    NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:externBirthdayInfo];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:encodedBirthdayInfo forKey:@"birthdayInfoList"];
+//    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+//    NSString *birthdayFileName = [path stringByAppendingPathComponent:@"birthdayFileName.plist"];
+//
+//    NSArray *a = [externBirthdayInfo copy];
+//    [a writeToFile:birthdayFileName atomically:YES];
 //    NSString *xpath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
 //    NSString *xfileName = [xpath stringByAppendingPathComponent:@"12.plist"];
 //
@@ -82,5 +89,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    application.applicationIconBadgeNumber = 0;
+    NSLog(@"收到了通知");
+}
 
 @end
