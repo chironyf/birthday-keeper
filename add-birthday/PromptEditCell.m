@@ -7,6 +7,7 @@
 //
 
 #import "PromptEditCell.h"
+#import "GCON.h"
 
 @implementation PromptEditCell
 
@@ -18,6 +19,7 @@
         pCell.promptEditField = [[UITextField alloc] init];
         pCell.promptEditField.translatesAutoresizingMaskIntoConstraints = NO;
         [pCell.contentView addSubview:pCell.promptEditField];
+        pCell.backgroundColor = [UIColor colorWithRed:themeCellRed green:themeCellGreen blue:themeCellBlue alpha:themeAlpha];
         
         NSLayoutConstraint *promptEditFieldCenterY = [NSLayoutConstraint constraintWithItem:pCell.promptEditField attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:pCell.contentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
         
@@ -31,6 +33,10 @@
     }
     NSLog(@"created pCell is %@", pCell);
     return pCell;
+}
+
+- (void)dealloc {
+    NSLog(@"promt cell dealloc");
 }
 
 

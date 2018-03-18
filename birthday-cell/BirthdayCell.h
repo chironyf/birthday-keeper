@@ -23,6 +23,9 @@
 //标记是否被取消
 @property (nonatomic, getter=isOn, strong) UISwitch *on;
 
+//日期
+@property (nonatomic, strong) NSDate *date;
+
 //用来添加观察
 @property (nonatomic, strong) NSString *isSwitchOn;
 

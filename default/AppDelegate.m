@@ -26,8 +26,19 @@
     
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BirthdayTableViewController *btvc = [[BirthdayTableViewController alloc] init];
+ 
+    //读取文件
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *birthdayFileName = [path stringByAppendingPathComponent:@"birthdayFileName.plist"];
+    
+    NSArray *result = [NSArray arrayWithContentsOfFile:birthdayFileName];
+
+    externBirthdayInfo = [result mutableCopy];
+    
+    btvc.birthdayInfo = [externBirthdayInfo mutableCopy];
+
     RootViewController *viewController = [[RootViewController alloc] initWithRootViewController:btvc];
-    [_window setBackgroundColor:UIColor.brownColor];
+    [_window setBackgroundColor:UIColor.blackColor];
     [_window setRootViewController:viewController];
     [_window makeKeyAndVisible];
     
@@ -42,6 +53,16 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *birthdayFileName = [path stringByAppendingPathComponent:@"birthdayFileName.plist"];
+    
+    NSArray *a = [externBirthdayInfo copy];
+    [a writeToFile:birthdayFileName atomically:YES];
+//    NSString *xpath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+//    NSString *xfileName = [xpath stringByAppendingPathComponent:@"12.plist"];
+//
+//    NSArray *xarray = @[@"123", @"456", @"789"];
+//    [xarray writeToFile:xfileName atomically:YES];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }

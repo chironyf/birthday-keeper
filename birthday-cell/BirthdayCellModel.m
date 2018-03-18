@@ -17,7 +17,7 @@
         _createdTime = createdTime;
         _remindTime = remindTime;
         _cellHeight = cellHeight;
-        _on = TRUE;
+        _on = FALSE;
     }
     return self;
 }
@@ -26,10 +26,10 @@
     self = [super init];
     if (self) {
         _prompt = [NSDate date];
-        _createdTime = @"";
-        _remindTime = @"";
+        _createdTime = @"null";
+        _remindTime = @"null";
         _cellHeight = 0.0f;
-        _on = TRUE;
+        _on = FALSE;
     }
     return self;
 }
@@ -39,7 +39,27 @@
     _createdTime = @"";
     _remindTime = @"";
     _cellHeight = 0.0f;
-    _on = TRUE;
+    _on = FALSE;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:_prompt forKey:@"prompt"];
+    [aCoder encodeObject:_createdTime forKey:@"createdTime"];
+    [aCoder encodeObject:_remindTime forKey:@"remindTime"];
+    [aCoder encodeDouble:_cellHeight forKey:@"cellHeight"];
+    [aCoder encodeBool:_on forKey:@"on"];
+    
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        self.prompt = [aDecoder decodeObjectForKey:@"prompt"];
+        self.createdTime = [aDecoder decodeObjectForKey:@"createdTime"];
+        self.remindTime = [aDecoder decodeObjectForKey:@"remindTime"];
+        self.cellHeight = [aDecoder decodeDoubleForKey:@"cellHeight"];
+        self.on = [aDecoder decodeBoolForKey:@"on"];
+    }
+    return self;
 }
 
 - (NSString *)description {
@@ -55,6 +75,8 @@
     copyedModel.on = self.on;
     return copyedModel;
 }
+
+
 
 
 @end

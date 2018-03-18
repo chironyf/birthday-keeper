@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BirthdayCellModel : NSObject <NSCopying>
+@interface BirthdayCellModel : NSObject <NSCopying, NSCoding>
 
 //设置为日期类型
 @property (nonatomic, strong) NSDate *prompt;

@@ -8,6 +8,7 @@
 
 #import "PromptViewController.h"
 #import "PromptEditCell.h"
+#import "GCON.h"
 
 
 
@@ -28,10 +29,11 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
     
     [_promptTable setDelegate:self];
     [_promptTable setDataSource:self];
-    
+    _promptTable.separatorColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
 //    _promptTable.estimatedRowHeight = 44;
     _promptTable.rowHeight = 44;
     _promptTable.translatesAutoresizingMaskIntoConstraints = NO;
+    _promptTable.backgroundColor = [UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha];
     
     [self.view addSubview:_promptTable];
     
@@ -71,6 +73,10 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
     //设置textField代理以及改换行为完成键
     [cell.promptEditField setDelegate:self];
     cell.promptEditField.returnKeyType = UIReturnKeyDone;
+    cell.promptEditField.keyboardAppearance = UIKeyboardAppearanceDark;
+    cell.promptEditField.textColor = UIColor.whiteColor;
+    
+    [cell.promptEditField setTintColor:[UIColor colorWithRed:themeTextRed green:themeTextGreen blue:themeTextBlue alpha:themeAlpha]];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     //赋值

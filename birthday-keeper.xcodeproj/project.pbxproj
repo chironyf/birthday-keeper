@@ -10,6 +10,7 @@
 		9E63E4D22056A85C00F9095F /* BirthdayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D12056A85C00F9095F /* BirthdayTableViewController.m */; };
 		9E63E4D52056A8D900F9095F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D42056A8D900F9095F /* RootViewController.m */; };
 		9E63E4D92056AA3E00F9095F /* BirthdayInfoAddedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */; };
+		9E7F903E205D6B9C0075B06D /* GCON.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F903D205D6B9C0075B06D /* GCON.m */; };
 		9EC16B552057B26C00C41B6E /* PromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC16B542057B26C00C41B6E /* PromptViewController.m */; };
 		9EC16B582057D04500C41B6E /* PromptEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC16B572057D04500C41B6E /* PromptEditCell.m */; };
 		9EFF6D542055041900D31326 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF6D532055041900D31326 /* AppDelegate.m */; };
@@ -47,6 +48,8 @@
 		9E63E4D42056A8D900F9095F /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		9E63E4D72056AA3E00F9095F /* BirthdayInfoAddedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayInfoAddedViewController.h; sourceTree = "<group>"; };
 		9E63E4D82056AA3E00F9095F /* BirthdayInfoAddedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayInfoAddedViewController.m; sourceTree = "<group>"; };
+		9E7F903C205D6B9C0075B06D /* GCON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCON.h; sourceTree = "<group>"; };
+		9E7F903D205D6B9C0075B06D /* GCON.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCON.m; sourceTree = "<group>"; };
 		9EC16B532057B26C00C41B6E /* PromptViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptViewController.h; sourceTree = "<group>"; };
 		9EC16B542057B26C00C41B6E /* PromptViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PromptViewController.m; sourceTree = "<group>"; };
 		9EC16B562057D04500C41B6E /* PromptEditCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptEditCell.h; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 			isa = PBXGroup;
 			children = (
 				9EFF6D602055041900D31326 /* Info.plist */,
+				9E7F903C205D6B9C0075B06D /* GCON.h */,
+				9E7F903D205D6B9C0075B06D /* GCON.m */,
 			);
 			path = config;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E7F903E205D6B9C0075B06D /* GCON.m in Sources */,
 				9EFF6D8E205504E300D31326 /* BirthdayCell.m in Sources */,
 				9E63E4D92056AA3E00F9095F /* BirthdayInfoAddedViewController.m in Sources */,
 				9EC16B552057B26C00C41B6E /* PromptViewController.m in Sources */,
