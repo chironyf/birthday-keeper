@@ -14,7 +14,7 @@
 ![](./images/home.PNG)
 
 ### 编辑页面
-![](edit.PNG)
+![](./images/edit.PNG)
 
 ### 添加生日界面
 ![](./images/add.PNG)
