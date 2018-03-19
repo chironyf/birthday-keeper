@@ -317,17 +317,24 @@ static int curBirthdayInfoCount = 0;
 
 //添加本地推送
 - (void)addLocalNotifications:(BirthdayCellModel *)bcm {
+//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     // 初始化本地通知
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    // 通知触发时间
-    localNotification.fireDate = bcm.prompt;
+    // 通知触发时间, 只设置月份 日 小时 分钟 秒
+    NSCalendar *calender = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents *dateComponents = [calender components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:bcm.prompt];
+    [dateComponents setHour:0];
+    [dateComponents setMinute:0];
+    [dateComponents setSecond:0];
+    //设置该天的00:00提醒
+    localNotification.fireDate = [calender dateFromComponents:dateComponents];
     
-    localNotification.timeZone = [NSTimeZone systemTimeZone];
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
     // 触发后，弹出警告框中显示的内容
     localNotification.alertBody = bcm.remindTime;
     // 触发时的声音（这里选择的系统默认声音）
     localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.repeatInterval = NSCalendarUnitYear;
+    localNotification.repeatInterval = kCFCalendarUnitYear;
     // 需要在App icon上显示的未读通知数（设置为1时，多个通知未读，系统会自动加1，如果不需要显示未读数，这里可以设置0）
     localNotification.applicationIconBadgeNumber = 1;
     // 设置通知的id，可用于通知移除，也可以传递其他值，当通知触发时可以获取
