@@ -1,9 +1,9 @@
 ## 项目简介
 - 一个生日管理APP, UI风格仿照的系统闹钟, 可以添加, 编辑, 删除生日以及本地推送提醒, 系统最低要求是iOS 9.0
-- 整体采用MVC架构, 核心数据是一个BirthdayCellModel类型的可变数组birthdayInfo, 用来保存添加过的生日信息
-- 为了实现数据存储, 设置了一个与它保持数据同步的全局可变数组externBirthdayInfo
-- 在添加推送的时候, userInfo字典一致用id作为键, 生日标签作为值, 因此最好不要设置两个标签相同的生日
-- 需要注意一下, 项目中的prompt和remindTime(NSString *)中途写反了的, 后来干脆将错就错, 反正也不影响
+- 整体采用MVC架构, 核心数据是一个BirthdayCellModel类型的可变数组birthdayInfo, 作为主控制器的一个属性, 用来保存添加过的生日信息
+- 为了实现数据存储, 设置了一个与birthdayInfo保持数据同步的全局可变数组externBirthdayInfo, 它用来启动时读取数据与进入后台时保存数据, 并将数据传入birthdayInfo中
+- 在添加推送的时候, userInfo字典一致用@"id"作为键, 生日标签作为值, 因此最好不要设置两个标签相同的生日
+- 需要注意一下, 数据模型中的prompt(提示)和remindTime(提醒时间)中途写反了的, 后来干脆将错就错, 反正也不影响, 所以实际展示的时间来自prompt, 提示标签来自remindTime
 - 有一个坑点需要注意, 用普通的方式是无法对可变数组添加观察者的, 需要调用一个KVC方法, 如下例子所示
 ```
 //需要调用这个方法 mutableArrayValueForKeyPath:
