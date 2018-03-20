@@ -81,17 +81,20 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    application.applicationIconBadgeNumber = 0;
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:externBirthdayInfo];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:encodedBirthdayInfo forKey:@"birthdayInfoList"];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     application.applicationIconBadgeNumber = 0;
-    NSLog(@"收到了通知");
 }
 
 @end

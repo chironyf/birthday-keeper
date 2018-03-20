@@ -117,7 +117,15 @@
 }
 
 - (void)save {
-    self.tempBirthdayInfo.prompt = [_datePicker date];
+    self.tempBirthdayInfo.prompt = [[_datePicker date] copy];
+    //确保创建时间不会被盖掉
+    if ([self.tempBirthdayInfo.createdTime isEqualToString:@""]) {
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy年MM月dd日 HH时mm分ss秒 zzz"];
+        NSString *na = [df stringFromDate:[NSDate date]];
+        NSString *curDateString = [na copy];
+        self.tempBirthdayInfo.createdTime = [curDateString copy];
+    }
     self.returnPromptToBirthdayListBlock(self.tempBirthdayInfo);
     self.isSavedBlock(@"TRUE");
     [self removeObserver:self forKeyPath:@"isAdd"];

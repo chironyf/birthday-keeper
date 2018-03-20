@@ -67,8 +67,6 @@ static int curBirthdayInfoCount = 0;
     _birthdayTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _birthdayTableView.separatorColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
 //    _birthdayTableView.
-    
-
     //隐藏多余的线条
     _birthdayTableView.tableFooterView = [[UIView alloc] init];
     
@@ -112,11 +110,10 @@ static int curBirthdayInfoCount = 0;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    
     if ([keyPath isEqualToString:@"isSaved"]) {
         NSString *flag = [change objectForKey:@"new"];
         if ([flag isEqualToString:@"TRUE"] && self.curIndex == -1) {
-            //默认关闭
+            //默认关闭, 这里不需要push
             curBirthdayInfoCount++;
             [[self mutableArrayValueForKeyPath:@"birthdayInfo"] insertObject:[_tempCellModel copy] atIndex:0];
             [externBirthdayInfo insertObject:[_tempCellModel copy] atIndex:0];
@@ -128,18 +125,9 @@ static int curBirthdayInfoCount = 0;
 //            [self.birthdayInfo replaceObjectAtIndex:_curIndex withObject:[_tempCellModel copy]];
             [externBirthdayInfo replaceObjectAtIndex:_curIndex withObject:[_tempCellModel copy]];
             [self.birthdayTableView reloadData];
-            //更新通知
-            NSArray *notifications = [UIApplication sharedApplication].scheduledLocalNotifications;
-            NSString *notificationId = _birthdayInfo[_curIndex].remindTime;
-            for (UILocalNotification *localNotification in notifications) {
-                NSLog(@"%@", [localNotification.userInfo objectForKey:@"id"]);
-                if ([[localNotification.userInfo objectForKey:@"id"] isEqualToString:notificationId]) {
-                    localNotification.fireDate = _birthdayInfo[_curIndex].prompt;
-                }
-            }
+            [self updateLocalNotification:_birthdayInfo[_curIndex]];
         } else if ([flag isEqualToString:@"FALSE"]) {
             //do nothing
-             NSLog(@"取消");
             [self.birthdayTableView reloadData];
         } else if ([flag isEqualToString:@"DELETE"] && _curIndex != -1) {
             if (self.birthdayInfo[_curIndex].on) {
@@ -168,7 +156,6 @@ static int curBirthdayInfoCount = 0;
             self.birthdayTableView.editing = FALSE;
             self.isBirthdayTableEditing = @"FALSE";
             self.navigationItem.rightBarButtonItem.enabled = TRUE;
-            
         }
     }
     
@@ -238,7 +225,6 @@ static int curBirthdayInfoCount = 0;
 
 - (void)dealloc {
 
-    
     [self removeObserver:self forKeyPath:@"isSaved"];
     [self removeObserver:self forKeyPath:@"birthdayInfo"];
     [self removeObserver:self forKeyPath:@"isBirthdayTableEditing"];
@@ -262,15 +248,11 @@ static int curBirthdayInfoCount = 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
     BirthdayCell *item = [BirthdayCell initWithTableView:tableView andReuseIdentifier:BirthdayCellIdentifier];
-
     //设置时间
     NSDate *date = _birthdayInfo[indexPath.row].prompt;
     //保存时间
     item.date = date;
-    
     NSTimeInterval sec = [date timeIntervalSinceNow];
     NSDate *currentDate = [[NSDate alloc] initWithTimeIntervalSinceNow:sec];
     
@@ -315,21 +297,33 @@ static int curBirthdayInfoCount = 0;
     }
 }
 
+/*
+ 根据提醒日期计算出通知的时间
+ 
+ */
+
+- (NSDate *)calcuFireDate:(NSDate *)remindDate {
+    NSCalendar *calender = [NSCalendar autoupdatingCurrentCalendar];
+    unsigned unitFlags = NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSDateComponents *dateComponents = [[calender components:unitFlags fromDate:remindDate] copy];
+    //提醒的时间转换为1年的同年同月
+    NSDate *mdDate = [[calender dateFromComponents:dateComponents] copy];
+    NSDate *now = [NSDate dateWithTimeIntervalSinceNow:0];
+    dateComponents = [[calender components:unitFlags fromDate:now] copy];
+    //将当前的日期转换为1年的同年同月
+    NSDate *curDate = [[calender dateFromComponents:dateComponents] copy];
+    NSTimeInterval ti = [curDate timeIntervalSinceDate:mdDate];
+    NSDate *fireDate = [NSDate dateWithTimeIntervalSinceNow:-ti + 30];
+    return fireDate;
+}
+
+
 //添加本地推送
 - (void)addLocalNotifications:(BirthdayCellModel *)bcm {
-//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    // 初始化本地通知
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    // 通知触发时间, 只设置月份 日 小时 分钟 秒
-    NSCalendar *calender = [NSCalendar autoupdatingCurrentCalendar];
-    NSDateComponents *dateComponents = [calender components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:bcm.prompt];
-    [dateComponents setHour:0];
-    [dateComponents setMinute:0];
-    [dateComponents setSecond:0];
-    //设置该天的00:00提醒
-    localNotification.fireDate = [calender dateFromComponents:dateComponents];
-    
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.fireDate = [self calcuFireDate:bcm.prompt];
     // 触发后，弹出警告框中显示的内容
     localNotification.alertBody = bcm.remindTime;
     // 触发时的声音（这里选择的系统默认声音）
@@ -338,45 +332,38 @@ static int curBirthdayInfoCount = 0;
     // 需要在App icon上显示的未读通知数（设置为1时，多个通知未读，系统会自动加1，如果不需要显示未读数，这里可以设置0）
     localNotification.applicationIconBadgeNumber = 1;
     // 设置通知的id，可用于通知移除，也可以传递其他值，当通知触发时可以获取
-    localNotification.userInfo = @{@"id" : bcm.remindTime};
+    localNotification.userInfo = @{@"createdTime" : bcm.createdTime};
     // 注册本地通知
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
 //取消本地推送
 - (void)cancelLocalNotifications:(BirthdayCellModel *)bcm {
-    // 取出全部本地通知
     NSArray *notifications = [UIApplication sharedApplication].scheduledLocalNotifications;
-    // 设置要移除的通知id
-//    NSDate *notificationId = bcm.prompt;
-    NSString *notificationId = bcm.remindTime;
-    // 遍历进行移除
+    NSString *notificationId = bcm.createdTime;
     for (UILocalNotification *localNotification in notifications) {
-        // 将每个通知的id取出来进行对比
-        NSLog(@"%@", [localNotification.userInfo objectForKey:@"id"]);
-        if ([[localNotification.userInfo objectForKey:@"id"] isEqualToString:notificationId]) {
+        if ([[localNotification.userInfo objectForKey:@"createdTime"] isEqualToString:notificationId]) {
             [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
         }
     }
 }
 
+- (void)updateLocalNotification:(BirthdayCellModel *)bcm {
+    //由于直接更新fireDate无法更新, 首先取消原来的通知
+    [self cancelLocalNotifications:bcm];
+    //加入新的通知
+    [self addLocalNotifications:bcm];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    curBirthdayInfoCount--;
-    [[self mutableArrayValueForKeyPath:@"birthdayInfo"] removeObjectAtIndex:indexPath.row];
-    [externBirthdayInfo removeObjectAtIndex:indexPath.row];
-    
     NSArray<NSIndexPath *> *d = @[indexPath];
     BirthdayCell *c = [self.birthdayTableView cellForRowAtIndexPath:indexPath];
     if ([c.isSwitchOn isEqualToString:@"TRUE"]) {
-        NSArray *notifications = [UIApplication sharedApplication].scheduledLocalNotifications;
-        NSString *notificationId = c.remindTime.text;
-        for (UILocalNotification *localNotification in notifications) {
-            if ([[localNotification.userInfo objectForKey:@"id"] isEqualToString:notificationId]) {
-                [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
-            }
-        }
+        [self cancelLocalNotifications:_birthdayInfo[indexPath.row]];
     }
-    
+    curBirthdayInfoCount--;
+    [[self mutableArrayValueForKeyPath:@"birthdayInfo"] removeObjectAtIndex:indexPath.row];
+    [externBirthdayInfo removeObjectAtIndex:indexPath.row];
     [self.birthdayTableView deleteRowsAtIndexPaths:d withRowAnimation:UITableViewRowAnimationLeft];
 }
 
@@ -389,7 +376,6 @@ static int curBirthdayInfoCount = 0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"当前选中的是第%d行", (long)indexPath.row);
     BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
     
     self.curIndex = indexPath.row;
@@ -403,11 +389,9 @@ static int curBirthdayInfoCount = 0;
     __weak BirthdayTableViewController *weakSelf = self;
     b.returnPromptToBirthdayListBlock = ^(BirthdayCellModel *model) {
         weakSelf.tempCellModel = [model copy];
-        NSLog(@"select cell 返回，收到数据 tempCellModel = %@;", model);
     };
     b.isSavedBlock = ^(NSString *isSaved) {
         weakSelf.isSaved = [isSaved copy];
-        NSLog(@"select cell 返回，weakSelf.isSaved = %@", isSaved);
     };
     
     [self.navigationController pushViewController:b animated:TRUE];
