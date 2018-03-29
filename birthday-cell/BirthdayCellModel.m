@@ -7,6 +7,7 @@
 //
 
 #import "BirthdayCellModel.h"
+#import <objc/runtime.h>
 
 @implementation BirthdayCellModel
 
@@ -43,21 +44,40 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:_prompt forKey:@"prompt"];
-    [aCoder encodeObject:_createdTime forKey:@"createdTime"];
-    [aCoder encodeObject:_remindTime forKey:@"remindTime"];
-    [aCoder encodeDouble:_cellHeight forKey:@"cellHeight"];
-    [aCoder encodeBool:_on forKey:@"on"];
+    unsigned int count = 0;
+    Ivar *list = class_copyIvarList(self.class, &count);
+    for (int i = 0; i < count; i++) {
+        Ivar tmp = list[i];
+        NSString *key = [NSString stringWithUTF8String:ivar_getName(tmp)];
+        id value = [self valueForKey:key];
+        [aCoder encodeObject:value forKey:key];
+    }
+    
+//    [aCoder encodeObject:_prompt forKey:@"prompt"];
+//    [aCoder encodeObject:_createdTime forKey:@"createdTime"];
+//    [aCoder encodeObject:_remindTime forKey:@"remindTime"];
+//    [aCoder encodeDouble:_cellHeight forKey:@"cellHeight"];
+//    [aCoder encodeBool:_on forKey:@"on"];
     
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
-        self.prompt = [aDecoder decodeObjectForKey:@"prompt"];
-        self.createdTime = [aDecoder decodeObjectForKey:@"createdTime"];
-        self.remindTime = [aDecoder decodeObjectForKey:@"remindTime"];
-        self.cellHeight = [aDecoder decodeDoubleForKey:@"cellHeight"];
-        self.on = [aDecoder decodeBoolForKey:@"on"];
+        unsigned int count = 0;
+        Ivar *list = class_copyIvarList(self.class, &count);
+        for (int i = 0; i < count; i++) {
+            Ivar tmp = list[i];
+            NSString *key = [NSString stringWithUTF8String:ivar_getName(tmp)];
+            id value = [aDecoder decodeObjectForKey:key];
+            [self setValue:value forKey:key];
+        }
+        
+        
+//        self.prompt = [aDecoder decodeObjectForKey:@"prompt"];
+//        self.createdTime = [aDecoder decodeObjectForKey:@"createdTime"];
+//        self.remindTime = [aDecoder decodeObjectForKey:@"remindTime"];
+//        self.cellHeight = [aDecoder decodeDoubleForKey:@"cellHeight"];
+//        self.on = [aDecoder decodeBoolForKey:@"on"];
     }
     return self;
 }
