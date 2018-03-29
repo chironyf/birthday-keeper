@@ -11,11 +11,11 @@
 @interface BirthdayCellModel : NSObject <NSCopying, NSCoding>
 
 //设置为日期类型
-@property (nonatomic, strong) NSDate *prompt;
+@property (nonatomic, copy) NSDate *prompt;
 
-@property (nonatomic, strong) NSString *createdTime;
+@property (nonatomic, copy) NSString *createdTime;
 
-@property (nonatomic, strong) NSString *remindTime;
+@property (nonatomic, copy) NSString *remindTime;
 
 @property (nonatomic, assign) double cellHeight;
 

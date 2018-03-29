@@ -52,6 +52,7 @@
         id value = [self valueForKey:key];
         [aCoder encodeObject:value forKey:key];
     }
+    free(list);
     
 //    [aCoder encodeObject:_prompt forKey:@"prompt"];
 //    [aCoder encodeObject:_createdTime forKey:@"createdTime"];
@@ -71,6 +72,7 @@
             id value = [aDecoder decodeObjectForKey:key];
             [self setValue:value forKey:key];
         }
+        free(list);
         
         
 //        self.prompt = [aDecoder decodeObjectForKey:@"prompt"];
