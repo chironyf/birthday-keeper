@@ -65,8 +65,6 @@
         [cell.remindTime setLineBreakMode:NSLineBreakByTruncatingTail];
         
         [cell addObserver:cell forKeyPath:@"isSwitchOn" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-        
-
     }
     return cell;
 }
