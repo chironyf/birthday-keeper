@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSDate *date;
 
 //用来添加观察
-@property (nonatomic, strong) NSString *isSwitchOn;
+@property (nonatomic, copy) NSString *isSwitchOn;
 
 + (instancetype)initWithTableView:(UITableView *)tableView andReuseIdentifier:(NSString *)identifier;
 

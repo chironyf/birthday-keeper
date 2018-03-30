@@ -33,7 +33,7 @@ typedef void(^isSaved)(NSString *);
 @property (nonatomic, copy) isSaved isSavedBlock;
 
 //标记是点击cell进来的还是点击添加进来的
-@property (nonatomic, strong) NSString *isAdd;
+@property (nonatomic, copy) NSString *isAdd;
 
 //保存多段的cell标签
 @property (nonatomic, copy) NSMutableArray<NSMutableArray *> *list;
