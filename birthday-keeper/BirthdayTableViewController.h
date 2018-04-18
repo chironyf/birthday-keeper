@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BirthdayCellModel.h"
 
-
 extern NSMutableArray<BirthdayCellModel *> *externBirthdayInfo;
 
 @interface BirthdayTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
@@ -27,12 +26,7 @@ extern NSMutableArray<BirthdayCellModel *> *externBirthdayInfo;
 //保存当前传入的cell的行号，默认为-1
 @property (nonatomic, assign) NSInteger curIndex;
 
-
-
 //保存传出去的cell，作为一个中介，用isSaved来判断是否将其插入本数据源
 @property (nonatomic, strong)  BirthdayCellModel *tempCellModel;
-
-
-
 
 @end

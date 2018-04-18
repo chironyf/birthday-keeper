@@ -24,7 +24,6 @@ static int curBirthdayInfoCount = 0;
 @property (nonatomic, strong) UIBarButtonItem *edit;
 @property (nonatomic, strong) UIBarButtonItem *finished;
 
-
 @end
 
 @implementation BirthdayTableViewController
@@ -34,7 +33,6 @@ static int curBirthdayInfoCount = 0;
     //没初始化的话，不会报错，但是没有数据显示
     
     [self addObserver:self forKeyPath:@"birthdayInfo" options:NSKeyValueObservingOptionNew context:nil];
-    
     [self addObserver:self forKeyPath:@"isBirthdayTableEditing" options:NSKeyValueObservingOptionNew context:nil];
     
     self.isBirthdayTableEditing = @"FALSE";
@@ -47,7 +45,6 @@ static int curBirthdayInfoCount = 0;
     
     [self addObserver:self forKeyPath:@"isSaved" options:NSKeyValueObservingOptionNew context:nil];
 
-    
     self.title = @"生日管家";
     
     //第一次进入在位读取数据时, editing 为 false, 编辑按钮灰, 添加按钮亮
@@ -66,16 +63,13 @@ static int curBirthdayInfoCount = 0;
     _birthdayTableView.translatesAutoresizingMaskIntoConstraints = NO;
     _birthdayTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _birthdayTableView.separatorColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
-//    _birthdayTableView.
     //隐藏多余的线条
     _birthdayTableView.tableFooterView = [[UIView alloc] init];
     
     _birthdayTableView.backgroundColor = [UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha];
-    
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:themeTextRed green:themeTextGreen blue:themeTextBlue alpha:themeAlpha];
-    
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: UIColor.whiteColor};
 
     [self.view addSubview:_birthdayTableView];
@@ -96,17 +90,7 @@ static int curBirthdayInfoCount = 0;
     _birthdayTableView.estimatedRowHeight = 88;
     _birthdayTableView.rowHeight = UITableViewAutomaticDimension;
     
-    
     self.birthdayTableView.editing = FALSE;
-
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-//    externBirthdayInfo = self.birthdayInfo;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-//    externBirthdayInfo = self.birthdayInfo;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
@@ -159,7 +143,6 @@ static int curBirthdayInfoCount = 0;
         }
     }
     
-    
     //监听是否在编辑状态, 编辑状态下cell不可点击
     if ([keyPath isEqualToString:@"isBirthdayTableEditing"]) {
         NSString *editFlag = [change objectForKey:@"new"];
@@ -168,9 +151,8 @@ static int curBirthdayInfoCount = 0;
         } else {
             self.navigationItem.rightBarButtonItem.enabled = TRUE;
         }
-
     }
-    
+
 }
 
 //添加的时候，需要将新的信息插入
@@ -220,23 +202,12 @@ static int curBirthdayInfoCount = 0;
     
     self.navigationItem.leftBarButtonItem = _edit;
     //添加reloadData动画
-
 }
 
 - (void)dealloc {
-
     [self removeObserver:self forKeyPath:@"isSaved"];
     [self removeObserver:self forKeyPath:@"birthdayInfo"];
     [self removeObserver:self forKeyPath:@"isBirthdayTableEditing"];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    CGSize height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    
-//    CGFloat h = cell.frame.size.height;
-//    NSLog(@"willDisplayCell, frame height = %f, systemLayoutSizeFittingSize = %f", h, height.height);
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -400,7 +371,6 @@ static int curBirthdayInfoCount = 0;
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除";
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -23,12 +23,9 @@
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
     [application registerUserNotificationSettings:settings];
 
-    
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BirthdayTableViewController *btvc = [[BirthdayTableViewController alloc] init];
- 
     //读取文件
-
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *birthdayData = [defaults objectForKey:@"birthdayInfoList"];
     if (birthdayData == nil) {
@@ -84,7 +81,6 @@
     application.applicationIconBadgeNumber = 0;
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
-
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:externBirthdayInfo];

@@ -19,6 +19,7 @@ float const themeTextRed = 253.f / 255.f;
 float const themeTextGreen = 148.f / 255.f;
 float const themeTextBlue = 38.f / 255.f;
 
+//cell颜色
 float const themeCellRed = 30.f / 255.f;
 float const themeCellGreen = 30.f / 255.f;
 float const themeCellBlue = 30.f / 255.f;

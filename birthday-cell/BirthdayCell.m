@@ -35,7 +35,6 @@
     
         cell.isSwitchOn = @"FALSE";
         
-        
         [cell.contentView addSubview:cell.prompt];
         [cell.contentView addSubview:cell.remindTime];
         [cell.contentView addSubview:cell.on];
@@ -90,8 +89,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 

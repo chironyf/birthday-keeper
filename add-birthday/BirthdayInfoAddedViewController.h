@@ -7,11 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-/*
- 添加, 编辑都是这个页面
- 
- */
-
 
 @class BirthdayCellModel;
 typedef void(^returnPromptToBirthdayList)(BirthdayCellModel *);
