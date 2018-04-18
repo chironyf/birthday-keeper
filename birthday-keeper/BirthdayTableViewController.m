@@ -10,12 +10,11 @@
 #import "BirthdayCell.h"
 #import "BirthdayCellModel.h"
 #import "BirthdayInfoAddedViewController.h"
-#import "GCON.h"
+#import "Config.h"
+#import "Singleton.h"
 #import <UserNotifications/UserNotifications.h>
 
 static NSString *const BirthdayCellIdentifier = @"BirthdayCellIdentifier";
-//作为同步属性的全局变量
-NSMutableArray<BirthdayCellModel *> *externBirthdayInfo;
 //用来记录当前数组的count,由于可变数组的监听,每次只能观察到一个元素的改变,无法观察count的变化
 static int curBirthdayInfoCount = 0;
 
@@ -62,14 +61,14 @@ static int curBirthdayInfoCount = 0;
     
     _birthdayTableView.translatesAutoresizingMaskIntoConstraints = NO;
     _birthdayTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _birthdayTableView.separatorColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
+    _birthdayTableView.separatorColor = THEME_CELL_LINE_COLOR;
     //隐藏多余的线条
     _birthdayTableView.tableFooterView = [[UIView alloc] init];
     
-    _birthdayTableView.backgroundColor = [UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha];
+    _birthdayTableView.backgroundColor = THEME_COLOR;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha];
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:themeTextRed green:themeTextGreen blue:themeTextBlue alpha:themeAlpha];
+    self.navigationController.navigationBar.barTintColor = THEME_COLOR;
+    self.navigationController.navigationBar.tintColor = THEME_TEXT_COLOR;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: UIColor.whiteColor};
 
     [self.view addSubview:_birthdayTableView];
@@ -100,14 +99,12 @@ static int curBirthdayInfoCount = 0;
             //默认关闭, 这里不需要push
             curBirthdayInfoCount++;
             [[self mutableArrayValueForKeyPath:@"birthdayInfo"] insertObject:[_tempCellModel copy] atIndex:0];
-            [externBirthdayInfo insertObject:[_tempCellModel copy] atIndex:0];
-            
+            Singleton.sharedInstance.birthdayInfo = _birthdayInfo;
             [self.birthdayTableView reloadData];
         } else if ([flag isEqualToString:@"TRUE"] && self.curIndex != -1) {
 //            NSLog(@"保存了cell的编辑");
             [[self mutableArrayValueForKeyPath:@"birthdayInfo"] replaceObjectAtIndex:_curIndex withObject:[_tempCellModel copy]];
-//            [self.birthdayInfo replaceObjectAtIndex:_curIndex withObject:[_tempCellModel copy]];
-            [externBirthdayInfo replaceObjectAtIndex:_curIndex withObject:[_tempCellModel copy]];
+            Singleton.sharedInstance.birthdayInfo = _birthdayInfo;
             [self.birthdayTableView reloadData];
             [self updateLocalNotification:_birthdayInfo[_curIndex]];
         } else if ([flag isEqualToString:@"FALSE"]) {
@@ -119,14 +116,10 @@ static int curBirthdayInfoCount = 0;
             }
             curBirthdayInfoCount--;
             [[self mutableArrayValueForKeyPath:@"birthdayInfo"] removeObjectAtIndex:_curIndex];
-            [externBirthdayInfo removeObjectAtIndex:_curIndex];
-            
+            Singleton.sharedInstance.birthdayInfo = _birthdayInfo;
             [self.birthdayTableView reloadData];
         }
-        NSLog(@"当前list行数 = %lu", (unsigned long)[self.birthdayInfo count]);
-        for (int i = 0; i < self.birthdayInfo.count; i++) {
-            NSLog(@"%@ -- extern =  %@", self.birthdayInfo[i], externBirthdayInfo[i]);
-        }
+
     }
     
     //监听数组的变化
@@ -256,13 +249,13 @@ static int curBirthdayInfoCount = 0;
     if ([curCell.isSwitchOn isEqualToString:@"TRUE"]) {
         curCell.isSwitchOn = @"FALSE";
         self.birthdayInfo[curIndexPath.row].on = FALSE;
-        externBirthdayInfo[curIndexPath.row].on = FALSE;
+        Singleton.sharedInstance.birthdayInfo = _birthdayInfo;
         //取消本地推送
         [self cancelLocalNotifications:self.birthdayInfo[curIndexPath.row]];
     } else {
         curCell.isSwitchOn = @"TRUE";
         self.birthdayInfo[curIndexPath.row].on = TRUE;
-        externBirthdayInfo[curIndexPath.row].on = TRUE;
+        Singleton.sharedInstance.birthdayInfo = _birthdayInfo;
         //添加本地推送
         [self addLocalNotifications:self.birthdayInfo[curIndexPath.row]];
     }
@@ -334,7 +327,8 @@ static int curBirthdayInfoCount = 0;
     }
     curBirthdayInfoCount--;
     [[self mutableArrayValueForKeyPath:@"birthdayInfo"] removeObjectAtIndex:indexPath.row];
-    [externBirthdayInfo removeObjectAtIndex:indexPath.row];
+//    [Singleton.sharedInstance.birthdayInfo removeObjectAtIndex:indexPath.row];
+    Singleton.sharedInstance.birthdayInfo = _birthdayInfo;
     [self.birthdayTableView deleteRowsAtIndexPaths:d withRowAnimation:UITableViewRowAnimationLeft];
 }
 

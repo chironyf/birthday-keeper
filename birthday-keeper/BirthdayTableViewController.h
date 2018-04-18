@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BirthdayCellModel.h"
 
-extern NSMutableArray<BirthdayCellModel *> *externBirthdayInfo;
-
 @interface BirthdayTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *birthdayTableView;

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "BirthdayTableViewController.h"
+#import "Singleton.h"
 
 
 @interface AppDelegate ()
@@ -29,11 +30,11 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *birthdayData = [defaults objectForKey:@"birthdayInfoList"];
     if (birthdayData == nil) {
-        externBirthdayInfo = [NSMutableArray array];
+        Singleton.sharedInstance.birthdayInfo = [NSMutableArray array];
     } else {
-        externBirthdayInfo = (NSMutableArray<BirthdayCellModel *> *)[NSKeyedUnarchiver unarchiveObjectWithData:birthdayData];
+        Singleton.sharedInstance.birthdayInfo = (NSMutableArray<BirthdayCellModel *> *)[NSKeyedUnarchiver unarchiveObjectWithData:birthdayData];
     }
-    btvc.birthdayInfo = [externBirthdayInfo mutableCopy];
+    btvc.birthdayInfo = [Singleton.sharedInstance.birthdayInfo mutableCopy];
  
     RootViewController *viewController = [[RootViewController alloc] initWithRootViewController:btvc];
     [_window setBackgroundColor:UIColor.blackColor];
@@ -51,24 +52,10 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    //    NSData *encodedCurBirdSightingList = [NSKeyedArchiver archivedDataWithRootObject:self.masterBirdSightingList];
-    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //    [defaults setObject:encodedCurBirdSightingList forKey:@"BirdSightingList"];
-    NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:externBirthdayInfo];
+    NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:Singleton.sharedInstance.birthdayInfo];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:encodedBirthdayInfo forKey:@"birthdayInfoList"];
-//    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-//    NSString *birthdayFileName = [path stringByAppendingPathComponent:@"birthdayFileName.plist"];
-//
-//    NSArray *a = [externBirthdayInfo copy];
-//    [a writeToFile:birthdayFileName atomically:YES];
-//    NSString *xpath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-//    NSString *xfileName = [xpath stringByAppendingPathComponent:@"12.plist"];
-//
-//    NSArray *xarray = @[@"123", @"456", @"789"];
-//    [xarray writeToFile:xfileName atomically:YES];
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
 }
 
 
@@ -83,7 +70,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:externBirthdayInfo];
+    NSData *encodedBirthdayInfo = [NSKeyedArchiver archivedDataWithRootObject:Singleton.sharedInstance.birthdayInfo];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:encodedBirthdayInfo forKey:@"birthdayInfoList"];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

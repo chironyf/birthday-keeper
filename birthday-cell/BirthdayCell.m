@@ -7,7 +7,7 @@
 //
 
 #import "BirthdayCell.h"
-#import "GCON.h"
+#import "Config.h"
 
 @implementation BirthdayCell
 
@@ -17,10 +17,10 @@
         NSLog(@"cell created +++");
         cell = [[BirthdayCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         
-        cell.backgroundColor = [UIColor colorWithRed:themeCellRed green:themeCellGreen blue:themeCellBlue alpha:themeAlpha];
+        cell.backgroundColor = THEME_CELL_COLOR;
         
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
+        cell.selectedBackgroundView.backgroundColor = THEME_CELL_LINE_COLOR;
         
         cell.prompt = [[UILabel alloc] init];
         //字体过大会导致cell高度奇怪变化
@@ -31,7 +31,7 @@
         cell.remindTime.textColor = UIColor.grayColor;
 
         cell.on = [[UISwitch alloc] init];
-        cell.on.onTintColor = [UIColor colorWithRed:themeTextRed green:themeTextGreen blue:themeTextBlue alpha:themeAlpha];
+        cell.on.onTintColor = THEME_TEXT_COLOR;
     
         cell.isSwitchOn = @"FALSE";
         

@@ -9,7 +9,7 @@
 #import "BirthdayInfoAddedViewController.h"
 #import "BirthdayCellModel.h"
 #import "PromptViewController.h"
-#import "GCON.h"
+#import "Config.h"
 
 @interface BirthdayInfoAddedViewController ()
 
@@ -44,20 +44,20 @@
     _datePicker.maximumDate = maxDate;
     _datePicker.minimumDate = minDate;
     [_datePicker setDate:_tempBirthdayInfo.prompt];
-    [_datePicker setBackgroundColor:[UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha]];
+    [_datePicker setBackgroundColor:THEME_COLOR];
     //设置成功字体为白色
     [_datePicker setValue:UIColor.whiteColor forKey:@"textColor"];
     [self.view addSubview:_datePicker];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    _tableView.separatorColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
+     _tableView.separatorColor = THEME_CELL_LINE_COLOR;
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.estimatedRowHeight = 44;
     _tableView.rowHeight = UITableViewAutomaticDimension;
-    _tableView.backgroundColor = [UIColor colorWithRed:themeRed green:themeGreen blue:themeBlue alpha:themeAlpha];
+     _tableView.backgroundColor = THEME_COLOR;
     
     NSLayoutConstraint *datePickerTop = [NSLayoutConstraint constraintWithItem:_datePicker attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     
@@ -179,9 +179,9 @@
     if (cell == nil) {
         NSLog(@"创建了新的单元格");
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
-        cell.backgroundColor = cell.backgroundColor = [UIColor colorWithRed:themeCellRed green:themeCellGreen blue:themeCellBlue alpha:themeAlpha];
+        cell.backgroundColor = cell.backgroundColor = THEME_CELL_COLOR;
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:themeCellLineRed green:themeCellLineGreen blue:themeCellLineBlue alpha:themeAlpha];
+        cell.selectedBackgroundView.backgroundColor = THEME_CELL_LINE_COLOR;
         
         if (indexPath.section == 0) {
             cell.imageView.image = [UIImage imageNamed:@"标签"];
@@ -199,8 +199,6 @@
     }
     return cell;
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
