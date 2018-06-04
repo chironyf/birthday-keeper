@@ -50,7 +50,7 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    
+    [super viewWillAppear:true];
     
     
     NSLog(@"view will appear");

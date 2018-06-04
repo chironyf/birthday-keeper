@@ -11,7 +11,7 @@
 @class BirthdayCellModel;
 @interface Singleton : NSObject
 
-@property (nonatomic, copy) NSMutableArray<BirthdayCellModel *> *birthdayInfo;
+@property (nonatomic, strong) NSMutableArray<BirthdayCellModel *> *birthdayInfo;
 
 + (instancetype)sharedInstance;
 

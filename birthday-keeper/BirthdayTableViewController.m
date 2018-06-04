@@ -344,7 +344,6 @@ static int curBirthdayInfoCount = 0;
     BirthdayInfoAddedViewController *b = [[BirthdayInfoAddedViewController alloc] init];
     
     self.curIndex = indexPath.row;
-    //一定要注意这里，不用copy的话会直接改掉原数组中的元素
     self.tempCellModel = [_birthdayInfo[_curIndex] copy];
     b.tempBirthdayInfo = self.tempCellModel;
     //标志不是添加而是选择的cell

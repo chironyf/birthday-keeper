@@ -31,6 +31,6 @@ typedef void(^isSaved)(NSString *);
 @property (nonatomic, copy) NSString *isAdd;
 
 //保存多段的cell标签
-@property (nonatomic, copy) NSMutableArray<NSMutableArray *> *list;
+@property (nonatomic, strong) NSMutableArray<NSMutableArray *> *list;
 
 @end

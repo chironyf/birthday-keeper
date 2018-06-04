@@ -141,6 +141,7 @@
 
 //选中cell之后返回取消cell的选中状态
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:true];
     [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:TRUE];
 }
 
