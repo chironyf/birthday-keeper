@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "Config.h"
 
 @interface RootViewController ()
 
@@ -18,7 +19,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 //    [[self.navigationBar appearance] setBarTintColor:UIColor.whiteColor];
-    [self.navigationBar setTintColor:UIColor.whiteColor];
+//    [self.navigationBar setTintColor:UIColor.whiteColor];
+//    [self.navigationBar setBackgroundColor:THEME_CELL_COLOR];
+    //关闭导航栏的毛玻璃效果
+//    [UINavigationBar appearance].translucent = NO;
+//    [[UINavigationBar appearance] setBackgroundColor:THEME_CELL_COLOR];
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
