@@ -10,10 +10,8 @@
 
 @class BirthdayCellModel;
 @interface Singleton : NSObject
-
 @property (nonatomic, strong) NSMutableArray<BirthdayCellModel *> *birthdayInfo;
 
 + (instancetype)sharedInstance;
-
 
 @end

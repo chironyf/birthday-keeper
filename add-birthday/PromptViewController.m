@@ -35,13 +35,37 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
     
     [self.view addSubview:_promptTable];
     
-    NSLayoutConstraint *promptTableTop = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0];
+    NSLayoutConstraint *promptTableTop = [NSLayoutConstraint constraintWithItem:_promptTable
+                                                                      attribute:NSLayoutAttributeTop
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.view
+                                                                      attribute:NSLayoutAttributeTop
+                                                                     multiplier:1
+                                                                       constant:0];
     
-    NSLayoutConstraint *promptTableBottom = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *promptTableBottom = [NSLayoutConstraint constraintWithItem:_promptTable
+                                                                         attribute:NSLayoutAttributeBottom
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.view
+                                                                         attribute:NSLayoutAttributeBottom
+                                                                        multiplier:1
+                                                                          constant:0];
     
-    NSLayoutConstraint *promptTableLeft = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+    NSLayoutConstraint *promptTableLeft = [NSLayoutConstraint constraintWithItem:_promptTable
+                                                                       attribute:NSLayoutAttributeLeft
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.view
+                                                                       attribute:NSLayoutAttributeLeft
+                                                                      multiplier:1
+                                                                        constant:0];
     
-    NSLayoutConstraint *promptTableRight = [NSLayoutConstraint constraintWithItem:_promptTable attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+    NSLayoutConstraint *promptTableRight = [NSLayoutConstraint constraintWithItem:_promptTable
+                                                                        attribute:NSLayoutAttributeRight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeRight
+                                                                       multiplier:1
+                                                                         constant:0];
     
     [self.view addConstraints:@[promptTableTop, promptTableBottom, promptTableLeft, promptTableRight]];
     
@@ -49,10 +73,7 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:true];
-    
-    
     NSLog(@"view will appear");
 }
 
@@ -100,15 +121,5 @@ static NSString *const promtpIdentifier = @"PromptEditCellIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

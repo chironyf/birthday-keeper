@@ -11,7 +11,10 @@
 
 @implementation BirthdayCellModel
 
-- (instancetype)initWithPrompt:(NSDate *)prompt CreatedTime:(NSString *)createdTime RemindTime:(NSString *)remindTime Height:(double)cellHeight {
+- (instancetype)initWithPrompt:(NSDate *)prompt
+                   CreatedTime:(NSString *)createdTime
+                    RemindTime:(NSString *)remindTime
+                        Height:(double)cellHeight {
     self = [super init];
     if (self) {
         _prompt = prompt;
@@ -36,11 +39,11 @@
 }
 
 - (void)clear {
-    _prompt = [NSDate date];
-    _createdTime = @"";
-    _remindTime = @"";
-    _cellHeight = 0.0f;
-    _on = FALSE;
+    self.prompt = [NSDate date];
+    self.createdTime = @"";
+    self.remindTime = @"";
+    self.cellHeight = 0.0f;
+    self.on = FALSE;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -53,17 +56,11 @@
         [aCoder encodeObject:value forKey:key];
     }
     free(list);
-    
-//    [aCoder encodeObject:_prompt forKey:@"prompt"];
-//    [aCoder encodeObject:_createdTime forKey:@"createdTime"];
-//    [aCoder encodeObject:_remindTime forKey:@"remindTime"];
-//    [aCoder encodeDouble:_cellHeight forKey:@"cellHeight"];
-//    [aCoder encodeBool:_on forKey:@"on"];
-    
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         unsigned int count = 0;
         Ivar *list = class_copyIvarList(self.class, &count);
         for (int i = 0; i < count; i++) {
@@ -73,13 +70,6 @@
             [self setValue:value forKey:key];
         }
         free(list);
-        
-        
-//        self.prompt = [aDecoder decodeObjectForKey:@"prompt"];
-//        self.createdTime = [aDecoder decodeObjectForKey:@"createdTime"];
-//        self.remindTime = [aDecoder decodeObjectForKey:@"remindTime"];
-//        self.cellHeight = [aDecoder decodeDoubleForKey:@"cellHeight"];
-//        self.on = [aDecoder decodeBoolForKey:@"on"];
     }
     return self;
 }
@@ -89,7 +79,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    BirthdayCellModel * copyedModel = [[self.class allocWithZone:zone] init];
+    BirthdayCellModel *copyedModel = [[self.class allocWithZone:zone] init];
     copyedModel.prompt = self.prompt;
     copyedModel.createdTime = self.createdTime;
     copyedModel.cellHeight = self.cellHeight;
@@ -97,8 +87,5 @@
     copyedModel.on = self.on;
     return copyedModel;
 }
-
-
-
 
 @end

@@ -13,76 +13,129 @@
 
 + (instancetype)initWithTableView:(UITableView *)tableView andReuseIdentifier:(NSString *)identifier {
     BirthdayCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        NSLog(@"cell created +++");
-        cell = [[BirthdayCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        
-        cell.backgroundColor = THEME_CELL_COLOR;
-        
-        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = THEME_CELL_LINE_COLOR;
-        
-        cell.prompt = [[UILabel alloc] init];
-        //字体过大会导致cell高度奇怪变化
-        [cell.prompt setFont:[UIFont systemFontOfSize:42 weight:UIFontWeightThin]];
-        [cell.prompt setTextColor:UIColor.grayColor];
+    if (cell) return cell;
+    NSLog(@"cell created +++");
     
-        cell.remindTime = [[UILabel alloc] init];
-        cell.remindTime.textColor = UIColor.grayColor;
+    cell = [[BirthdayCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    cell.backgroundColor = THEME_CELL_COLOR;
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = THEME_CELL_LINE_COLOR;
+    
+    cell.prompt = [[UILabel alloc] init];
+    [cell.prompt setFont:[UIFont systemFontOfSize:42 weight:UIFontWeightThin]];
+    [cell.prompt setTextColor:UIColor.grayColor];
+    [cell.prompt setNumberOfLines:1];
+    [cell.prompt setLineBreakMode:NSLineBreakByTruncatingTail];
+    
+    cell.remindTime = [[UILabel alloc] init];
+    cell.remindTime.textColor = UIColor.grayColor;
+    [cell.remindTime setNumberOfLines:1];
+    [cell.remindTime setLineBreakMode:NSLineBreakByTruncatingTail];
+    
+    cell.on = [[UISwitch alloc] init];
+    cell.on.onTintColor = THEME_TEXT_COLOR;
+    
+    cell.isSwitchOn = @"FALSE";
+    
+    [cell.contentView addSubview:cell.prompt];
+    [cell.contentView addSubview:cell.remindTime];
+    [cell.contentView addSubview:cell.on];
 
-        cell.on = [[UISwitch alloc] init];
-        cell.on.onTintColor = THEME_TEXT_COLOR;
+    cell.prompt.translatesAutoresizingMaskIntoConstraints = NO;
+    cell.remindTime.translatesAutoresizingMaskIntoConstraints = NO;
+    cell.on.translatesAutoresizingMaskIntoConstraints = NO;
     
-        cell.isSwitchOn = @"FALSE";
-        
-        [cell.contentView addSubview:cell.prompt];
-        [cell.contentView addSubview:cell.remindTime];
-        [cell.contentView addSubview:cell.on];
+    NSLayoutConstraint *onCenterY = [NSLayoutConstraint constraintWithItem:cell.on
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:cell.contentView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                multiplier:1
+                                                                  constant:0];
     
-        cell.prompt.translatesAutoresizingMaskIntoConstraints = NO;
-        cell.remindTime.translatesAutoresizingMaskIntoConstraints = NO;
-        cell.on.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        NSLayoutConstraint *onCenterY = [NSLayoutConstraint constraintWithItem:cell.on attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-        NSLayoutConstraint *onRight = [NSLayoutConstraint constraintWithItem:cell.on attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeRight multiplier:1 constant:-18];
-        
-        NSLayoutConstraint *promptLeft = [NSLayoutConstraint constraintWithItem:cell.prompt attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeLeft multiplier:1 constant:12];
-        NSLayoutConstraint *promptTop = [NSLayoutConstraint constraintWithItem:cell.prompt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeTop multiplier:1 constant:12];
-        NSLayoutConstraint *promptRight = [NSLayoutConstraint constraintWithItem:cell.prompt attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeRight multiplier:1 constant:-78];
-        
-        NSLayoutConstraint *remindTimeTop= [NSLayoutConstraint constraintWithItem:cell.remindTime attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:cell.prompt attribute:NSLayoutAttributeBottom multiplier:1 constant:2];
-        
-        NSLayoutConstraint *remindTimeLeft = [NSLayoutConstraint constraintWithItem:cell.remindTime attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeLeft multiplier:1 constant:12];
-        NSLayoutConstraint *remindTimeRight = [NSLayoutConstraint constraintWithItem:cell.remindTime attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeRight multiplier:1 constant:-78];
-        NSLayoutConstraint *remindTimeBottom = [NSLayoutConstraint constraintWithItem:cell.remindTime attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeBottom multiplier:1 constant:-12];
-        
-        [cell.contentView addConstraints:@[promptLeft, promptTop, promptRight, remindTimeTop, remindTimeLeft, remindTimeRight, remindTimeBottom, onCenterY, onRight]];
-        [cell.prompt setNumberOfLines:1];
-        [cell.prompt setLineBreakMode:NSLineBreakByTruncatingTail];
-        
-        [cell.remindTime setNumberOfLines:1];
-        [cell.remindTime setLineBreakMode:NSLineBreakByTruncatingTail];
-        
-        [cell addObserver:cell forKeyPath:@"isSwitchOn" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-    }
+    NSLayoutConstraint *onRight = [NSLayoutConstraint constraintWithItem:cell.on
+                                                               attribute:NSLayoutAttributeRight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:cell.contentView
+                                                               attribute:NSLayoutAttributeRight
+                                                              multiplier:1
+                                                                constant:-18];
+    
+    NSLayoutConstraint *promptLeft = [NSLayoutConstraint constraintWithItem:cell.prompt
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:cell.contentView
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                 multiplier:1
+                                                                   constant:12];
+    
+    NSLayoutConstraint *promptTop = [NSLayoutConstraint constraintWithItem:cell.prompt
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:cell.contentView
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1
+                                                                  constant:12];
+    
+    NSLayoutConstraint *promptRight = [NSLayoutConstraint constraintWithItem:cell.prompt
+                                                                   attribute:NSLayoutAttributeRight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:cell.contentView
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1
+                                                                    constant:-78];
+    
+    NSLayoutConstraint *remindTimeTop= [NSLayoutConstraint constraintWithItem:cell.remindTime
+                                                                    attribute:NSLayoutAttributeTop
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:cell.prompt
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                   multiplier:1
+                                                                     constant:2];
+    
+    NSLayoutConstraint *remindTimeLeft = [NSLayoutConstraint constraintWithItem:cell.remindTime
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:cell.contentView
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                     multiplier:1
+                                                                       constant:12];
+    
+    NSLayoutConstraint *remindTimeRight = [NSLayoutConstraint constraintWithItem:cell.remindTime
+                                                                       attribute:NSLayoutAttributeRight
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:cell.contentView
+                                                                       attribute:NSLayoutAttributeRight
+                                                                      multiplier:1
+                                                                        constant:-78];
+    
+    NSLayoutConstraint *remindTimeBottom = [NSLayoutConstraint constraintWithItem:cell.remindTime
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:cell.contentView
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1
+                                                                         constant:-12];
+    
+    [cell.contentView addConstraints:@[promptLeft, promptTop, promptRight, remindTimeTop, remindTimeLeft, remindTimeRight, remindTimeBottom, onCenterY, onRight]];
+    
+    [cell addObserver:cell forKeyPath:@"isSwitchOn" options:NSKeyValueObservingOptionNew context:nil];
+
     return cell;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"isSwitchOn"]) {
-        NSString *flag = [change valueForKey:NSKeyValueChangeNewKey];
-        NSString *old = [change valueForKey:NSKeyValueChangeOldKey];
-        if ([flag isEqualToString:@"FALSE"] && [old isEqualToString:@"TRUE"]) {
-            [self.prompt setTextColor:UIColor.grayColor];
-            [self.remindTime setTextColor:UIColor.grayColor];
-        } else if ([flag isEqualToString:@"TRUE"] && [old isEqualToString:@"FALSE"]) {
-            [self.prompt setTextColor:UIColor.whiteColor];
-            [self.remindTime setTextColor:UIColor.whiteColor];
-        }
+    if (![keyPath isEqualToString:@"isSwitchOn"]) return;
+    NSString *new = [change valueForKey:NSKeyValueChangeNewKey];
+    if ([new isEqualToString:@"FALSE"]) {
+        [self.prompt setTextColor:UIColor.grayColor];
+        [self.remindTime setTextColor:UIColor.grayColor];
+    } else {
+        [self.prompt setTextColor:UIColor.whiteColor];
+        [self.remindTime setTextColor:UIColor.whiteColor];
     }
 }
 
-//
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"isSwitchOn"];
 }
@@ -90,7 +143,5 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 }
-
-
 
 @end

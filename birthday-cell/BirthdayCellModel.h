@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface BirthdayCellModel : NSObject <NSCopying, NSCoding>
-
-//设置为日期类型
+///提示标签
 @property (nonatomic, copy) NSDate *prompt;
 
 @property (nonatomic, copy) NSString *createdTime;
@@ -18,14 +17,16 @@
 @property (nonatomic, copy) NSString *remindTime;
 
 @property (nonatomic, assign) double cellHeight;
-
-//标记是否被取消，默认是TRUE
+///默认推送关闭
 @property (nonatomic,  getter=isOn, assign) BOOL on;
 
-- (instancetype)initWithPrompt:(NSString *)prompt CreatedTime:(NSString *)createdTime RemindTime:(NSString *)remindTime Height:(double)cellHeight;
+- (instancetype)initWithPrompt:(NSDate *)prompt
+                   CreatedTime:(NSString *)createdTime
+                    RemindTime:(NSString *)remindTime
+                        Height:(double)cellHeight;
 
 - (instancetype)init;
-//清空数据
+
 - (void)clear;
 
 @end

@@ -13,7 +13,6 @@
 
 @interface BirthdayInfoAddedViewController ()
 
-
 @property (nonatomic, strong) UILocalNotification *notifi;
 @end
 
@@ -21,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     
     _list = [NSMutableArray<NSMutableArray *> array];
     NSMutableArray *section1 = [@[@"标签"] mutableCopy];
@@ -38,8 +36,6 @@
     NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24];
     //1920
     NSDate *minDate = [NSDate dateWithTimeIntervalSince1970:60 * 60 * 24 * 365 * 50 * -1];
-//    NSLog(@"%@", maxDate);
-//    NSLog(@"%@", minDate);
     
     _datePicker.maximumDate = maxDate;
     _datePicker.minimumDate = minDate;
@@ -59,28 +55,75 @@
     _tableView.rowHeight = UITableViewAutomaticDimension;
      _tableView.backgroundColor = THEME_COLOR;
     
-    NSLayoutConstraint *datePickerTop = [NSLayoutConstraint constraintWithItem:_datePicker attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *datePickerTop = [NSLayoutConstraint constraintWithItem:_datePicker
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.topLayoutGuide
+                                                                     attribute:NSLayoutAttributeBottom
+                                                                    multiplier:1
+                                                                      constant:0];
     
-    NSLayoutConstraint *datePickerLeft = [NSLayoutConstraint constraintWithItem:_datePicker attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+    NSLayoutConstraint *datePickerLeft = [NSLayoutConstraint constraintWithItem:_datePicker
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.view
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                     multiplier:1
+                                                                       constant:0];
     
-    NSLayoutConstraint *datePickerRight = [NSLayoutConstraint constraintWithItem:_datePicker attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+    NSLayoutConstraint *datePickerRight = [NSLayoutConstraint constraintWithItem:_datePicker
+                                                                       attribute:NSLayoutAttributeRight
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.view
+                                                                       attribute:NSLayoutAttributeRight
+                                                                      multiplier:1
+                                                                        constant:0];
     
-    NSLayoutConstraint *tableTop = [NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_datePicker attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *tableTop = [NSLayoutConstraint constraintWithItem:_tableView
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_datePicker
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1
+                                                                 constant:0];
     
-    NSLayoutConstraint *tableBottom = [NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *tableBottom = [NSLayoutConstraint constraintWithItem:_tableView
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.view
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1
+                                                                    constant:0];
     
-    NSLayoutConstraint *tableLeft = [NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+    NSLayoutConstraint *tableLeft = [NSLayoutConstraint constraintWithItem:_tableView
+                                                                 attribute:NSLayoutAttributeLeft
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeLeft
+                                                                multiplier:1
+                                                                  constant:0];
     
-    NSLayoutConstraint *tableRight = [NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+    NSLayoutConstraint *tableRight = [NSLayoutConstraint constraintWithItem:_tableView
+                                                                  attribute:NSLayoutAttributeRight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.view
+                                                                  attribute:NSLayoutAttributeRight
+                                                                 multiplier:1
+                                                                   constant:0];
     
     [self.view addSubview:_tableView];
     [self.view addConstraints:@[tableTop, tableBottom, tableLeft, tableRight, datePickerTop, datePickerLeft, datePickerRight]];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(save)];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(cancel)];
     
-    // Do any additional setup after loading the view.
 }
 
 
@@ -108,8 +151,6 @@
         NSString *flag = [change objectForKey:@"new"];
         if ([flag isEqualToString:@"TRUE"]) {
             self.title = @"添加";
-            //添加的默认关闭
-//            self.tempBirthdayInfo.on = TRUE;
         } else if ([flag isEqualToString:@"FALSE"]) {
             self.title = @"编辑";
         }
@@ -205,15 +246,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
